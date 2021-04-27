@@ -1,7 +1,10 @@
 # GAME TICTACTOE
-
 ## Mục lục:
+
 ### 1. Tổng quan về game:
+#### 1.1 Giới thiệu:
+#### 1.2 Ngôn ngữ và thư viện được dùng:
+
 
 ## 1. Tổng quan về game:
 ### 1.1 Giới thiệu:
@@ -9,3 +12,4 @@
   
 ### 1.2 Ngôn ngữ và thư viện được dùng:
 #### TICTACTOE được viết bởi C++ cùng thư viện đồ họa SDL2. Ngoài ra TICTACTOE có cài thêm SDL2_image để render ảnh và SDL2_mixer để render âm thanh.
+aaaa
