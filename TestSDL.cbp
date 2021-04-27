@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="AI.h" />
+		<Unit filename="README.md" />
 		<Unit filename="bulletinBoard.h" />
 		<Unit filename="button.h" />
 		<Unit filename="game.h" />

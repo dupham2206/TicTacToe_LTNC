@@ -3,14 +3,10 @@
 #define AI_H
 #include<iostream>
 #include<algorithm>
+#include "button.h"
 using namespace std;
 class AI {
 private:
-    enum stateOfaSquare {
-        StateEmpty,
-        StatePLAYER,
-        StateAI
-    };
     int cntStep = 0;
     const int dx[10] = {1, 1, 0, -1, 0, 1, -1, -1};
     const int dy[10] = {1, 0, 1, 1, -1, -1, 0, -1};
@@ -44,18 +40,16 @@ public:
         int depth;
 
         if(numStepToWin == 3) depth = 9;
-        if(numStepToWin == 4) depth = 6;
         if(numStepToWin == 5) depth = 5;
 
         if(numStepToWin == 5){
             cntSizeOfValueEvaluate = 0;
             for(int i = 1; i <= sizeOfBoard.second; ++i){
                 for(int j = 1; j <= sizeOfBoard.first; ++j){
-                    if(boardState[i][j] == StateEmpty){
-                        boardState[i][j] = StateAI;
-                        valueEvaluate[cntSizeOfValueEvaluate] = heuristicValue()
-                        - manhattanDistanceToCenterSquare(i, j);
-                        boardState[i][j] = StateEmpty;
+                    if(boardState[i][j] == STATE_EMPTY){
+                        boardState[i][j] = STATE_AI;
+                        valueEvaluate[cntSizeOfValueEvaluate] = heuristicValue();
+                        boardState[i][j] = STATE_EMPTY;
                         ++cntSizeOfValueEvaluate;
                     }
                 }
@@ -65,17 +59,17 @@ public:
         }
         for(int i = 1; i <= sizeOfBoard.second; ++i){
             for(int j = 1; j <= sizeOfBoard.first; ++j){
-                if(boardState[i][j] == StateEmpty){
-                    boardState[i][j] = StateAI;
+                if(boardState[i][j] == STATE_EMPTY){
+                    boardState[i][j] = STATE_AI;
                     if(numStepToWin == 5){
-                        if(heuristicValue() - manhattanDistanceToCenterSquare(i, j) < valueStandard){
-                                boardState[i][j] = StateEmpty;
+                        if(heuristicValue() < valueStandard){
+                                boardState[i][j] = STATE_EMPTY;
                                 continue;
                         }
                     }
 
                     score = minimax(false, -1e8, 1e8, depth - 1);
-                    boardState[i][j] = StateEmpty;
+                    boardState[i][j] = STATE_EMPTY;
                     if(score > bestScore) bestScore = score, thisMove = {j, i};
 
                     if(numStepToWin == 5){
@@ -92,8 +86,8 @@ public:
         ++cntStep;
         int score = 0, bestScore = 0;
         int valueStandard, cntChild = 0;
-        if(havePlayer_win(StateAI)) return 1e8;
-        else if(havePlayer_win(StatePLAYER)) return -1e8;
+        if(havePlayer_win(STATE_AI)) return 1e8;
+        else if(havePlayer_win(STATE_PLAYER)) return -1e8;
         else if(gameOver(sizeOfBoard)) return 0;
         if(depth == 1) return heuristicValue();
         if(isTurnOfAI == 1){
@@ -101,39 +95,38 @@ public:
                 cntSizeOfValueEvaluate = 0;
                 for(int i = 1; i <= sizeOfBoard.second; ++i){
                     for(int j = 1; j <= sizeOfBoard.first; ++j){
-                        if(boardState[i][j] == StateEmpty){
-                            boardState[i][j] = StateAI;
-                            valueEvaluate[cntSizeOfValueEvaluate] = heuristicValue()
-                             - manhattanDistanceToCenterSquare(i, j);
-                            boardState[i][j] = StateEmpty;
+                        if(boardState[i][j] == STATE_EMPTY){
+                            boardState[i][j] = STATE_AI;
+                            valueEvaluate[cntSizeOfValueEvaluate] = heuristicValue();
+                            boardState[i][j] = STATE_EMPTY;
                             ++cntSizeOfValueEvaluate;
                         }
                     }
                 }
                 sort(valueEvaluate, valueEvaluate + cntSizeOfValueEvaluate);
-                valueStandard = valueEvaluate[cntSizeOfValueEvaluate / 2];
+                valueStandard = valueEvaluate[cntSizeOfValueEvaluate * 2 / 3];
             }
             bestScore = -1e8;
             for(int i = 1; i <= sizeOfBoard.second; ++i){
                 for(int j = 1; j <= sizeOfBoard.first; ++j){
-                    if(boardState[i][j] == StateEmpty){
-                        boardState[i][j] = StateAI;
+                    if(boardState[i][j] == STATE_EMPTY){
+                        boardState[i][j] = STATE_AI;
                         if(numStepToWin == 5){
-                            if(heuristicValue()- manhattanDistanceToCenterSquare(i, j) < valueStandard){
-                                boardState[i][j] = StateEmpty;
+                            if(heuristicValue() < valueStandard){
+                                boardState[i][j] = STATE_EMPTY;
                                 continue;
                             }
                         }
 
                         score = minimax(false, alpha, beta, depth - 1);
-                        boardState[i][j] = StateEmpty;
+                        boardState[i][j] = STATE_EMPTY;
                         bestScore = max(bestScore, score);
                         alpha = max(alpha, bestScore);
                         if(alpha >= beta) return bestScore;
 
                         if(numStepToWin == 5){
                             ++cntChild;
-                            if(cntChild > cntSizeOfValueEvaluate / 2) break;
+                            if(cntChild > cntSizeOfValueEvaluate / 3) break;
                         }
                     }
                 }
@@ -145,40 +138,40 @@ public:
                 cntSizeOfValueEvaluate = 0;
                 for(int i = 1; i <= sizeOfBoard.second; ++i){
                     for(int j = 1; j <= sizeOfBoard.first; ++j){
-                        if(boardState[i][j] == StateEmpty){
-                            boardState[i][j] = StatePLAYER;
-                            valueEvaluate[cntSizeOfValueEvaluate] = heuristicValue()
-                            + manhattanDistanceToCenterSquare(i, j);
-                            boardState[i][j] = StateEmpty;
+                        if(boardState[i][j] == STATE_EMPTY){
+                            boardState[i][j] = STATE_PLAYER;
+                            valueEvaluate[cntSizeOfValueEvaluate] = heuristicValue();
+
+                            boardState[i][j] = STATE_EMPTY;
                             ++cntSizeOfValueEvaluate;
                         }
                     }
                 }
                 sort(valueEvaluate, valueEvaluate + cntSizeOfValueEvaluate);
-                valueStandard = valueEvaluate[cntSizeOfValueEvaluate / 2];
+                valueStandard = valueEvaluate[cntSizeOfValueEvaluate / 3];
             }
             bestScore = 1e8;
             for(int i = 1; i <= sizeOfBoard.second; ++i){
                 for(int j = 1; j <= sizeOfBoard.first; ++j){
-                    if(boardState[i][j] == StateEmpty){
-                        boardState[i][j] = StatePLAYER;
+                    if(boardState[i][j] == STATE_EMPTY){
+                        boardState[i][j] = STATE_PLAYER;
 
                         if(numStepToWin == 5){
-                            if(heuristicValue() + manhattanDistanceToCenterSquare(i, j) > valueStandard){
-                                boardState[i][j] = StateEmpty;
+                            if(heuristicValue() > valueStandard){
+                                boardState[i][j] = STATE_EMPTY;
                                 continue;
                             }
                         }
 
                         score = minimax(true, alpha, beta, depth - 1);
-                        boardState[i][j] = StateEmpty;
+                        boardState[i][j] = STATE_EMPTY;
                         bestScore = min(bestScore, score);
                         beta = min(beta, bestScore);
                         if(alpha >= beta) return bestScore;
 
                         if(numStepToWin == 5){
                             ++cntChild;
-                            if(cntChild > cntSizeOfValueEvaluate / 2) break;
+                            if(cntChild > cntSizeOfValueEvaluate / 3) break;
                         }
                     }
                 }
@@ -187,13 +180,13 @@ public:
         }
     }
     int heuristicValue(){
-        if(havePlayer_win(StateAI)) return 1e8;
-        if(havePlayer_win(StatePLAYER)) return -1e8;
+        if(havePlayer_win(STATE_AI)) return 1e8;
+        if(havePlayer_win(STATE_PLAYER)) return -1e8;
         if(gameOver(sizeOfBoard)) return 0;
         int value = 0;
         for(int x = 1; x <= sizeOfBoard.second; ++x){
             for(int y = 1; y <= sizeOfBoard.first; ++y){
-                if(boardState[x][y] == StatePLAYER){
+                if(boardState[x][y] == STATE_PLAYER){
                     int curValue = 1;
                     int lengthCanBeWin = cntContinue(x, y, -1, -1, 1);
                     if(lengthCanBeWin) curValue *= lengthCanBeWin;
@@ -205,7 +198,7 @@ public:
                     if(lengthCanBeWin) curValue *= lengthCanBeWin;
                     if(curValue != 1) value -= curValue;
                 }
-                if(boardState[x][y] == StateAI){
+                if(boardState[x][y] == STATE_AI){
                     int curValue = 1;
                     int lengthCanBeWin = cntContinue(x, y, -1, -1, 2);
                     if(lengthCanBeWin) curValue *= lengthCanBeWin;
@@ -230,11 +223,11 @@ public:
                 ++blockLeft;
                 break;
             }
-            if(boardState[x + i * dx][y + i * dy] == StateEmpty){
+            if(boardState[x + i * dx][y + i * dy] == STATE_EMPTY){
                     ++i; cntLeft++;
                     while(checkInsideBoard(x + i * dx, y + i * dy)){
                         if(boardState[x + i * dx][ y + i * dy] == 3 - statePlayer){ ++blockLeft; break; }
-                        if(boardState[x + i * dx][ y + i * dy] == StateEmpty) break;
+                        if(boardState[x + i * dx][ y + i * dy] == STATE_EMPTY) break;
                         ++i;++cntFarLeft;
                     }
                     break;
@@ -246,11 +239,11 @@ public:
                 ++blockRight;
                 break;
             }
-            if(boardState[x + i * dx][y + i * dy] == StateEmpty){
+            if(boardState[x + i * dx][y + i * dy] == STATE_EMPTY){
                     --i; cntRight++;
                     while(checkInsideBoard(x + i * dx, y + i * dy)){
                         if(boardState[x + i * dx][ y + i * dy] == 3 - statePlayer){ ++blockRight; break; }
-                        if(boardState[x + i * dx][ y + i * dy] == StateEmpty) break;
+                        if(boardState[x + i * dx][ y + i * dy] == STATE_EMPTY) break;
                         --i; ++cntFarRight;
                     }
                     break;
@@ -261,9 +254,9 @@ public:
         if(blockLeft + blockRight == 2 && cntWin <= 4) return 0;
         if(cntWin <= 1) return 0;
         return cntWin;
-}
+    }
 
-    checkInsideBoard(int x,int y){
+    bool checkInsideBoard(int x,int y){
         if(x < 1 || y < 1 || x > sizeOfBoard.second || y > sizeOfBoard.first) return 0;
         return 1;
     }
@@ -299,14 +292,6 @@ public:
             for(int j = 1; j <= sizeOfBoard.first; ++j)
                 if(!boardState[i][j]) return 0;
         return 1;
-    }
-    void check(pair<int,int> sizeOfBoard, int a){
-        for(int i = 1; i <= sizeOfBoard.second; ++i)
-            for(int j = 1; j <= sizeOfBoard.first; ++j)
-                boardState[i][j] = 0;
-        boardState[1][1] = 1;
-        boardState[4][4] = 2;
-        cout << heuristicValue() << " aaaaaaaaa" << "\n";
     }
 };
 

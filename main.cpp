@@ -10,9 +10,6 @@ using namespace std;
 
 
 int main(int argc, char* argv[]){
-    static const int SCREEN_WIDTH = 800;
-    static const int SCREEN_HEIGHT = 600;
-    static const string WINDOW_TITLE = "TICTACTOE GAME";
     bool inGame = 0;
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -36,7 +33,6 @@ int main(int argc, char* argv[]){
             Tictactoe.render(renderer);
             while(inGame) Tictactoe.handleEvent(window, renderer, inGame);
         }
-        cout << "AAAA";
     }
     //SDL_RenderClear(renderer);
    //Khi thông thường chạy với môi trường bình thường ở nhà
