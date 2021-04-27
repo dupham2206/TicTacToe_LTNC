@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1619417473 source:c:\users\apc\documents\testsdl\main.cpp
+	<iostream>
+	<SDL.h>
+	"pregame.h"
+	"game.h"
+	"button.h"
+	<SDL_image.h>
+	"sdlsupport.h"
+
+1616228159 source:c:\users\apc\documents\testsdl\test.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	<string>
+
+1619425067 c:\users\apc\documents\testsdl\game.h
+	<iostream>
+	"button.h"
+	"AI.h"
+
+1619421586 c:\users\apc\documents\testsdl\button.h
+	<iostream>
+	<SDL_image.h>
+	"sdlsupport.h"
+
+1616302675 c:\users\apc\documents\testsdl\loadimage.h
+	<iostream>
+
+1619420941 c:\users\apc\documents\testsdl\sdlsupport.h
+	<iostream>
+
+1619421351 c:\users\apc\documents\testsdl\pregame.h
+	<iostream>
+	"button.h"
+
+1619430960 c:\users\apc\documents\testsdl\ai.h
+	<iostream>
+	<algorithm>
+
+1619371945 source:c:\users\apc\documents\testsdl\trash.cpp
+

@@ -1,0 +1,3 @@
+#ifndef BULLETINBOARD_H
+#define BULLETINBOARD_H
+
