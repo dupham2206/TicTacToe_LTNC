@@ -5,7 +5,7 @@
 #### 1.1 Giới thiệu:
 #### 1.2 Ngôn ngữ và thư viện được dùng:
 
-![alt](http://https://github.com/dupham2206/TicTacToe_LTNC/blob/master/pictures/demo.png)
+![alt](https://github.com/dupham2206/TicTacToe_LTNC/blob/master/pictures/demo.png)
 
 ## 1. Tổng quan về game:
 ### 1.1 Giới thiệu:
