@@ -85,3 +85,4 @@ void Button::render(SDL_Renderer* renderer, bool haveRenderPresent, bool havePat
     if(haveRenderPresent) SDL_RenderPresent(renderer);
 }
 #endif
+

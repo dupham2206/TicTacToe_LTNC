@@ -23,7 +23,7 @@ private:
         choiceNumberOfPieceConsecutiveToWin[MAP_33] = 3;
         choiceSizeOfBoard[MAP_55] = {5 , 5};
         choiceNumberOfPieceConsecutiveToWin[MAP_55] = 4;
-        choiceSizeOfBoard[MAP_99] = {9 , 9};
+        choiceSizeOfBoard[MAP_99] = {12 , 12};
         choiceNumberOfPieceConsecutiveToWin[MAP_99] = 5;
         choiceSizeOfBoard[MAP_1212] = {12 , 12};
         choiceNumberOfPieceConsecutiveToWin[MAP_1212] = 5;
@@ -171,3 +171,4 @@ public:
 
 
 #endif
+

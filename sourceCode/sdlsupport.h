@@ -47,10 +47,10 @@ void initSDL(SDL_Window* &window, SDL_Renderer* &renderer, int SCREEN_WIDTH, int
     if (window == nullptr) logSDLError(std::cout, "CreateWindow", true);
 
 
-    //Khi thông thường chạy với môi trường bình thường ở nhà
+    //Khi th�ng thu?ng ch?y v?i m�i tru?ng b�nh thu?ng ? nh�
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED |
                                           SDL_RENDERER_PRESENTVSYNC);
-    //Khi chạy ở máy thực hành WinXP ở trường (máy ảo)
+    //Khi ch?y ? m�y th?c h�nh WinXP ? tru?ng (m�y ?o)
     //renderer = SDL_CreateSoftwareRenderer(SDL_GetWindowSurface(window));
     if (renderer == nullptr) logSDLError(std::cout, "CreateRenderer", true);
 
@@ -196,4 +196,5 @@ void setData(SDL_Renderer* renderer){
 }
 
 #endif
+
 
