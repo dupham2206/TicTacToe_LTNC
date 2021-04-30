@@ -5,6 +5,9 @@
 #include<iostream>
 #include "button.h"
 #include "AI.h"
+#include "AIextendHardMode.h"
+#include "AIextendMediumMode.h"
+#include "AIextendEasyMode.h"
 #include "sdlsupport.h"
 
 using namespace std;
@@ -15,7 +18,7 @@ private:
     Button square[20][20];
     Button restartButton;
     Button returnMenuButton;
-    AI botPlayer;
+    AIextendEasyMode botPlayer;
     int stateOfBulletinBoard;
 
     int numberOfPieceConsecutiveToWin;

@@ -23,7 +23,7 @@ private:
         choiceNumberOfPieceConsecutiveToWin[MAP_33] = 3;
         choiceSizeOfBoard[MAP_55] = {5 , 5};
         choiceNumberOfPieceConsecutiveToWin[MAP_55] = 4;
-        choiceSizeOfBoard[MAP_99] = {12 , 12};
+        choiceSizeOfBoard[MAP_99] = {9 , 9};
         choiceNumberOfPieceConsecutiveToWin[MAP_99] = 5;
         choiceSizeOfBoard[MAP_1212] = {12 , 12};
         choiceNumberOfPieceConsecutiveToWin[MAP_1212] = 5;
@@ -80,12 +80,7 @@ private:
     void checkEventForEnterButton(SDL_Event &e, SDL_Renderer* renderer, bool &inGame){
         if(EnterToGame.handleEventButton(e, ENTER_PREGAME, true , true) == true){
             if(currentButtonChoosingMap && currentButtonChoosingPlayerAI){
-                if(currentButtonChoosingMap == MAP_1212 && currentButtonChoosingPlayerAI == STATE_AI){
-                    Mix_PlayChannel(-1, dataChunk[ERROR], 0);
-                    stateOfBulletinBoard = CAN_NOT_PLAY_MAP1212_WITH_AI;
-                    render(renderer);
-                }
-                else if(currentButtonChoosingMap == MAP_55 && currentButtonChoosingPlayerAI == STATE_AI){
+                if(currentButtonChoosingMap == MAP_55 && currentButtonChoosingPlayerAI == STATE_AI){
                     Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                     stateOfBulletinBoard = CAN_NOT_PLAY_MAP55_WITH_AI;
                     render(renderer);

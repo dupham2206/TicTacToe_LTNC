@@ -33,6 +33,9 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="AI.h" />
+		<Unit filename="AI_hard.h" />
+		<Unit filename="AIextendHardMode.h" />
+		<Unit filename="AIextendMediumMode.h" />
 		<Unit filename="README.md" />
 		<Unit filename="bulletinBoard.h" />
 		<Unit filename="button.h" />
@@ -40,8 +43,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="pregame.h" />
 		<Unit filename="sdlsupport.h" />
-		<Unit filename="test.cpp" />
-		<Unit filename="trash.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
