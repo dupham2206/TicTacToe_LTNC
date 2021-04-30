@@ -34,6 +34,7 @@
 		</Compiler>
 		<Unit filename="AI.h" />
 		<Unit filename="AI_hard.h" />
+		<Unit filename="AIextendEasyMode.h" />
 		<Unit filename="AIextendHardMode.h" />
 		<Unit filename="AIextendMediumMode.h" />
 		<Unit filename="README.md" />

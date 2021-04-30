@@ -26,6 +26,7 @@ int main(int argc, char* argv[]){
         }
         if(inGame){
             Game Tictactoe;
+            Tictactoe.setLevelOfAI(PreTictactoe.getLevel());
             Tictactoe.setSizeOfBoard(PreTictactoe.getChooseSizeOfBoard().first,
                                       PreTictactoe.getChooseSizeOfBoard().second);
             Tictactoe.setNumberOfPieceConsecutiveToWin(PreTictactoe.GetChoiceNumberOfPieceConsecutiveToWin());

@@ -18,7 +18,7 @@ private:
     Button square[20][20];
     Button restartButton;
     Button returnMenuButton;
-    AIextendEasyMode botPlayer;
+    AI* botPlayer;
     int stateOfBulletinBoard;
 
     int numberOfPieceConsecutiveToWin;
@@ -46,7 +46,7 @@ private:
                 square[i][j].setPositionTopLeft((i - 1) * square[i][j].getLengthOfButton().first,
                                                  (j - 1) * square[i][j].getLengthOfButton().second);
                 square[i][j].setTypeOfButton(SQUARE_GAME);
-                botPlayer.setBoardState(j , i, STATE_EMPTY);
+                botPlayer->setBoardState(j , i, STATE_EMPTY);
             }
         }
     }
@@ -75,17 +75,21 @@ public:
     void setSizeOfBoard(int x,int y){
             sizeOfBoard.first = x;
             sizeOfBoard.second = y;
-            botPlayer.setSizeOfBoard(x , y);
+            botPlayer->setSizeOfBoard(x , y);
     }
     void setNumberOfPieceConsecutiveToWin(int number){
             numberOfPieceConsecutiveToWin = number;
-            botPlayer.setNumStepToWin(number);
+            botPlayer->setNumStepToWin(number);
+    }
+    void setLevelOfAI(int stateLevel){
+        if(stateLevel == EASY) botPlayer = new AIextendEasyMode();
+        if(stateLevel == MEDIUM) botPlayer = new AIextendMediumMode();
+        if(stateLevel == HARD) botPlayer = new AIextendHardMode();
     }
     void setAllAttribute(){
         setAttributeForAllSquares();
         setAttributeForRestartButton();
         setAttributeForReturnMenuButton();
-
     }
     void changeTurn(SDL_Renderer* renderer){
         turnOfPlayer = FIRST_PLAYER + SECOND_PLAYER - turnOfPlayer;
@@ -121,7 +125,7 @@ public:
     }
     void AiMove(SDL_Renderer* renderer){
         if(winner != NOT_ENDGAME) return;
-        pair<int,int> bestMove = botPlayer.bestMove();
+        pair<int,int> bestMove = botPlayer->bestMove();
         int y = bestMove.second, x = bestMove.first;
         square[x][y].setStateButton(turnOfPlayer);
         square[x][y].setTypeOfButton(SQUARE_GAME_HAVEPLAYED);
@@ -130,7 +134,7 @@ public:
         square[x][y].render(renderer, 1, 1);
         squareHavingPlayed = {x , y};
         Mix_PlayChannel(-1, dataChunk[CLICK], 0);
-        botPlayer.setBoardState(y , x, turnOfPlayer);
+        botPlayer->setBoardState(y , x, turnOfPlayer);
         changeTurn(renderer);
         winner = PlayerWinGame();
         if(x == 0 && y == 0){
@@ -154,7 +158,7 @@ public:
                             square[i][j].render(renderer, 1, 1);
                             squareHavingPlayed = {i , j};
                             Mix_PlayChannel(-1, dataChunk[CLICK], 0);
-                            botPlayer.setBoardState(j , i, turnOfPlayer);
+                            botPlayer->setBoardState(j , i, turnOfPlayer);
                             changeTurn(renderer);
                             winner = PlayerWinGame();
                             if(winner != NOT_ENDGAME) endGame(renderer);
@@ -178,13 +182,13 @@ public:
         for(int i = 1; i <= sizeOfBoard.first; ++i){
             for(int j = 1; j <= sizeOfBoard.second; ++j){
                 square[i][j].setStateButton(0);
-                botPlayer.setBoardState(j , i, 0);
+                botPlayer->setBoardState(j , i, 0);
             }
         }
         render(renderer);
     }
     void renderBulletinBoard(SDL_Renderer* renderer){
-        RenderMedia(renderer, dataImageButton[BULLETIN_BOARD_PREGAME][stateOfBulletinBoard],
+        RenderMedia(renderer, dataImage[BULLETIN_BOARD_PREGAME][stateOfBulletinBoard],
                     3 * SCREEN_WIDTH / 4, 0, SCREEN_WIDTH/ 4, SCREEN_HEIGHT / 3);
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderPresent(renderer);
@@ -192,26 +196,26 @@ public:
     void endGame(SDL_Renderer* renderer){
         Mix_PlayChannel(-1, dataChunk[ENDGAME_MUSIC], 0);
         if(winner == TWO_PLAYER_DRAW){
-            RenderMedia(renderer, dataImageButton[ENDGAME_GAME][DRAW],
+            RenderMedia(renderer, dataImage[ENDGAME_GAME][DRAW],
                     3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3 , SCREEN_WIDTH/ 4, SCREEN_WIDTH * 5 / 48);
         }
         if(winner == SECOND_PLAYER){
             if(isPlayWithAI){
-                RenderMedia(renderer, dataImageButton[ENDGAME_GAME][YOU_LOSE],
+                RenderMedia(renderer, dataImage[ENDGAME_GAME][YOU_LOSE],
                     3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3 , SCREEN_WIDTH/ 4, SCREEN_WIDTH * 5 / 48);
             }
             else {
-                RenderMedia(renderer, dataImageButton[ENDGAME_GAME][PLAYER2_WIN],
+                RenderMedia(renderer, dataImage[ENDGAME_GAME][PLAYER2_WIN],
                     3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3 , SCREEN_WIDTH/ 4, SCREEN_WIDTH * 5 / 48);
             }
         }
         else if(winner == FIRST_PLAYER) {
             if(isPlayWithAI){
-                RenderMedia(renderer, dataImageButton[ENDGAME_GAME][YOU_WIN],
+                RenderMedia(renderer, dataImage[ENDGAME_GAME][YOU_WIN],
                     3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3 , SCREEN_WIDTH/ 4, SCREEN_WIDTH * 5 / 48);
             }
             else {
-                RenderMedia(renderer, dataImageButton[ENDGAME_GAME][PLAYER1_WIN],
+                RenderMedia(renderer, dataImage[ENDGAME_GAME][PLAYER1_WIN],
                     3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3 , SCREEN_WIDTH/ 4, SCREEN_WIDTH * 5 / 48);
             }
         }

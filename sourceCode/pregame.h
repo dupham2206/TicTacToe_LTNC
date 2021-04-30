@@ -11,12 +11,15 @@ private:
     int choiceNumberOfPieceConsecutiveToWin[4];
     int sizeOfChoiceMap = 4;
     int sizeOfChoicePlayerAI = 2;
+    int sizeOfChoiceLevel = 3;
     Button ChoiceMap[6]; // 4 button choice map
     Button ChoicePlayerAI[4]; // 2 button choose play with AI or play with another player
-    int currentButtonChoosingMap = 0;
-    int currentButtonChoosingPlayerAI = STATE_EMPTY; // Not choose
-    int stateOfBulletinBoard = EMPTY;
+    Button ChoiceLevel[4];
     Button EnterToGame;
+    int currentButtonChoosingMap = NOT_CHOOSE;
+    int currentButtonChoosingPlayerAI = STATE_EMPTY; // Not choose
+    int currentLevelChoosing = NOT_HAVE_ANYTHING;
+    int stateOfBulletinBoard = EMPTY;
 
     void setUpForInfoOfMap(){
         choiceSizeOfBoard[MAP_33] = {3 , 3};
@@ -55,6 +58,14 @@ private:
         EnterToGame.setTypeOfButton(ENTER_PREGAME);
         EnterToGame.setStateButton(true);
     }
+    void setUpForButtonChoiceLevel(){
+        for(int i = 1; i <= 3; ++i){ // 0 is easy, 1 is medium, 2 is hard
+            ChoiceLevel[i].setPositionTopLeft(SCREEN_WIDTH * 13 / 15, SCREEN_HEIGHT * 35 / 48 + (i - 1) * SCREEN_HEIGHT / 15);
+            ChoiceLevel[i].setLengthOfButton(SCREEN_WIDTH / 9, SCREEN_HEIGHT / 12);
+            ChoiceLevel[i].setTypeOfButton(CHOICE_LEVEL_PREGAME);
+            ChoiceLevel[i].setStateButton(i);
+        }
+    }
     void checkEventForMapButton(SDL_Event &e, SDL_Renderer* renderer){
         for(int i = 1; i <= sizeOfChoiceMap; ++i){
             if(ChoiceMap[i].handleEventButton(e, CHOICE_MAP_PREGAME, i, i) == true){ // State k thay doi nen de i va i
@@ -85,6 +96,13 @@ private:
                     stateOfBulletinBoard = CAN_NOT_PLAY_MAP55_WITH_AI;
                     render(renderer);
                 }
+                else if((currentButtonChoosingMap == MAP_1212 || currentButtonChoosingMap == MAP_99) &&
+                        currentButtonChoosingPlayerAI == STATE_AI && currentLevelChoosing == NOT_HAVE_ANYTHING){
+                    Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                    stateOfBulletinBoard = NOT_CHOOSE_LEVEL;
+                    render(renderer);
+                }
+
                 else inGame = true;
             }
             else if(currentButtonChoosingMap == NOT_CHOOSE || currentButtonChoosingPlayerAI == STATE_EMPTY){
@@ -104,6 +122,19 @@ private:
             }
         }
     }
+    void checkEventForLevelButton(SDL_Event &e, SDL_Renderer* renderer){
+        if((currentButtonChoosingMap != MAP_1212 && currentButtonChoosingMap != MAP_99)
+           || currentButtonChoosingPlayerAI != STATE_AI) return;
+        for(int i = 1; i <= sizeOfChoiceLevel; ++i){
+            if(ChoiceLevel[i].handleEventButton(e, CHOICE_LEVEL_PREGAME , i, i) == true){
+                if(currentLevelChoosing)
+                    ChoiceLevel[currentLevelChoosing].setTypeOfButton(CHOICE_LEVEL_PREGAME);
+                ChoiceLevel[i].setTypeOfButton(CHOICE_LEVEL_PREGAME_SUCCESS);
+                currentLevelChoosing = i;
+                render(renderer);
+            }
+        }
+    }
 
 public:
     void setUpPreGame(){
@@ -111,6 +142,7 @@ public:
         setUpForButtonMap();
         setUpForButtonPlayerAI();
         setUpForButtonEnterGame();
+        setUpForButtonChoiceLevel();
     }
     pair<int,int> getChooseSizeOfBoard(){
         return choiceSizeOfBoard[currentButtonChoosingMap];
@@ -125,6 +157,11 @@ public:
         currentButtonChoosingPlayerAI = STATE_EMPTY;
         return chooseAIorPlayer - 1;
     }
+    int getLevel(){
+        int level = currentLevelChoosing;
+        currentLevelChoosing = 0;
+        return level;
+    }
     void handleEvent(SDL_Window* window, SDL_Renderer* renderer, bool &inGame){
         SDL_Event e;
         while( SDL_PollEvent( &e )){
@@ -133,6 +170,7 @@ public:
                 checkEventForMapButton(e, renderer);
                 checkEventForPlayerAIButton(e, renderer);
                 checkEventForEnterButton(e, renderer, inGame);
+                checkEventForLevelButton(e, renderer);
             }
         }
     }
@@ -144,19 +182,25 @@ public:
         // render choice buttons of AI and Player
         for(int i = 1; i <= sizeOfChoicePlayerAI; ++i)
             ChoicePlayerAI[i].render(renderer, false, false);
+        // render choice level
+        if((currentButtonChoosingMap == MAP_1212 || currentButtonChoosingMap == MAP_99)
+            && currentButtonChoosingPlayerAI == STATE_AI){
+            for(int i = 1; i <= 3; ++i)
+                ChoiceLevel[i].render(renderer, false, false);
+        }
         // render enter button
         EnterToGame.render(renderer, false, false);
         // render title of game
-        RenderMedia(renderer, dataImageButton[HEADING_PREGAME][1],
+        RenderMedia(renderer, dataImage[HEADING_PREGAME][1],
                     SCREEN_WIDTH / 8, 0, SCREEN_WIDTH/ 2, SCREEN_HEIGHT / 3);
         // render title of choose map
-        RenderMedia(renderer, dataImageButton[CHOOSE_MAP_PREGAME][1],
+        RenderMedia(renderer, dataImage[CHOOSE_MAP_PREGAME][1],
                     SCREEN_WIDTH / 16, SCREEN_HEIGHT * 5 / 12, SCREEN_WIDTH * 5 / 16, SCREEN_HEIGHT / 6);
         // render title of choose AI and Player
-        RenderMedia(renderer, dataImageButton[CHOOSE_AI_PREGAME][1],
+        RenderMedia(renderer, dataImage[CHOOSE_AI_PREGAME][1],
                     SCREEN_WIDTH * 10 / 16, SCREEN_HEIGHT * 5 / 12, SCREEN_WIDTH * 5 / 16, SCREEN_HEIGHT / 6);
         // render bulletin board
-        RenderMedia(renderer, dataImageButton[BULLETIN_BOARD_PREGAME][stateOfBulletinBoard],
+        RenderMedia(renderer, dataImage[BULLETIN_BOARD_PREGAME][stateOfBulletinBoard],
                     SCREEN_WIDTH * 3 / 4, 0, SCREEN_WIDTH/ 4, SCREEN_HEIGHT / 3);
         SDL_RenderPresent(renderer);
 

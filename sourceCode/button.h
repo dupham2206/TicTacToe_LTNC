@@ -67,7 +67,7 @@ bool Button::checkInsideButton(int x,int y){
 }
 void Button::render(SDL_Renderer* renderer, bool haveRenderPresent, bool havePattern){
     if(stateButton){
-        RenderMedia(renderer, dataImageButton[typeOfButton][stateButton],
+        RenderMedia(renderer, dataImage[typeOfButton][stateButton],
                             positionTopLeft.x, positionTopLeft.y, lengthOfButton.first, lengthOfButton.second);
     }
     if(havePattern){

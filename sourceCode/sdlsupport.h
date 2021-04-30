@@ -69,7 +69,7 @@ void quitSDL(SDL_Window* window, SDL_Renderer* renderer){
     SDL_Quit();
 }
 
-SDL_Texture* dataImageButton[20][20];
+SDL_Texture* dataImage[20][20];
 Mix_Chunk* dataChunk[10];
 Mix_Music* dataMusic[10];
 static const int SCREEN_WIDTH = 800;
@@ -94,7 +94,9 @@ enum typeOfImage
     HEADING_PREGAME,
     PAUSE_GAME,
     BULLETIN_BOARD_PREGAME,
-    ENDGAME_GAME
+    ENDGAME_GAME,
+    CHOICE_LEVEL_PREGAME,
+    CHOICE_LEVEL_PREGAME_SUCCESS
 };
 
 enum stateOfReporter {
@@ -110,6 +112,7 @@ enum stateOfReporter {
     PLAYER2_TURN,
     ENDGAME,
     ENDGAME_ADMIT_LOSE,
+    NOT_CHOOSE_LEVEL
 };
 
 enum stateOfEndGameBULLETINBOARD {
@@ -144,48 +147,62 @@ enum chunk {
     CLICK,
     ENDGAME_MUSIC,
     ERROR
-
 };
+enum levelGame {
+    NOT_HAVE_ANYTHING,
+    EASY,
+    MEDIUM,
+    HARD
+};
+
 void setData(SDL_Renderer* renderer){
-    dataImageButton[ENTER_PREGAME][1] = loadMedia(renderer , "../pictures/EnterGameButton.png");
-    dataImageButton[CHOICE_MAP_PREGAME][MAP_33] = loadMedia(renderer , "../pictures/choice33.png");
-    dataImageButton[CHOICE_MAP_PREGAME][MAP_55] = loadMedia(renderer , "../pictures/choice55.png");
-    dataImageButton[CHOICE_MAP_PREGAME][MAP_99] = loadMedia(renderer , "../pictures/choice99.png");
-    dataImageButton[CHOICE_MAP_PREGAME][MAP_1212] = loadMedia(renderer , "../pictures/choice1212.png");
-    dataImageButton[CHOICE_MAP_SUCCESS_PREGAME][MAP_33] = loadMedia(renderer , "../pictures/choice33success.png");
-    dataImageButton[CHOICE_MAP_SUCCESS_PREGAME][MAP_55] = loadMedia(renderer , "../pictures/choice55success.png");
-    dataImageButton[CHOICE_MAP_SUCCESS_PREGAME][MAP_99] = loadMedia(renderer , "../pictures/choice99success.png");
-    dataImageButton[CHOICE_MAP_SUCCESS_PREGAME][MAP_1212] = loadMedia(renderer , "../pictures/choice1212success.png");
-    dataImageButton[CHOICE_PLAYER_AI_SUCCESS_PREGAME][STATE_PLAYER] = loadMedia(renderer , "../pictures/choicePlayPlayerSuccess.png");
-    dataImageButton[CHOICE_PLAYER_AI_SUCCESS_PREGAME][STATE_AI] = loadMedia(renderer , "../pictures/choicePlayAISuccess.png");
-    dataImageButton[CHOICE_PLAYER_AI_PREGAME][STATE_PLAYER] = loadMedia(renderer , "../pictures/choicePlayPlayer.png");
-    dataImageButton[CHOICE_PLAYER_AI_PREGAME][STATE_AI] = loadMedia(renderer , "../pictures/choicePlayAI.png");
-    dataImageButton[SQUARE_GAME][FIRST_PLAYER] = loadMedia(renderer , "../pictures/player1_X.png");
-    dataImageButton[SQUARE_GAME][SECOND_PLAYER] = loadMedia(renderer , "../pictures/player2_O.png");
-    dataImageButton[SQUARE_GAME_HAVEPLAYED][FIRST_PLAYER] = loadMedia(renderer , "../pictures/player1_X_havePlayed.png");
-    dataImageButton[SQUARE_GAME_HAVEPLAYED][SECOND_PLAYER] = loadMedia(renderer , "../pictures/player2_O_havePlayed.png");
-    dataImageButton[RESTART_GAME][1] = loadMedia(renderer, "../pictures/RestartGame.png");
-    dataImageButton[RETURN_MENU_GAME][1] = loadMedia(renderer, "../pictures/returnMenu.png");
-    dataImageButton[CHOOSE_AI_PREGAME][1] = loadMedia(renderer, "../pictures/chooseAI.png");
-    dataImageButton[CHOOSE_MAP_PREGAME][1] = loadMedia(renderer, "../pictures/chooseMap.png");
-    dataImageButton[HEADING_PREGAME][1] = loadMedia(renderer, "../pictures/heading.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][EMPTY] = loadMedia(renderer, "../pictures/bulletinBoard.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_PLAYER_AND_MAP] = loadMedia(renderer, "../pictures/bulletinBoard_chooseAIandMap.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_PLAYER] = loadMedia(renderer, "../pictures/bulletinBoard_chooseAI.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_MAP] = loadMedia(renderer, "../pictures/bulletinBoard_chooseMap.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][CAN_NOT_PLAY_MAP1212_WITH_AI] = loadMedia(renderer, "../pictures/bulletinBoard_notSupportAIwith1212.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][CAN_NOT_PLAY_MAP55_WITH_AI] = loadMedia(renderer, "../pictures/bulletinBoard_notSupportAIwith55.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][YOUR_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_yourTurn.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][AI_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_AIturn.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][PLAYER1_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_turnPlayer1.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][PLAYER2_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_turnPlayer2.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][ENDGAME] = loadMedia(renderer, "../pictures/bulletinBoard_endGame.png");
-    dataImageButton[BULLETIN_BOARD_PREGAME][ENDGAME_ADMIT_LOSE] = loadMedia(renderer, "../pictures/bulletinBoard_endGameAdmit.png");
-    dataImageButton[ENDGAME_GAME][YOU_WIN] = loadMedia(renderer, "../pictures/bulletinBoard_youWin.png");
-    dataImageButton[ENDGAME_GAME][YOU_LOSE] = loadMedia(renderer, "../pictures/bulletinBoard_youLose.png");
-    dataImageButton[ENDGAME_GAME][DRAW] = loadMedia(renderer, "../pictures/bulletinBoard_draw.png");
-    dataImageButton[ENDGAME_GAME][PLAYER1_WIN] = loadMedia(renderer, "../pictures/bulletinBoard_player1win.png");
-    dataImageButton[ENDGAME_GAME][PLAYER2_WIN] = loadMedia(renderer, "../pictures/bulletinBoard_player2win.png");
+    dataImage[ENTER_PREGAME][1] = loadMedia(renderer , "../pictures/EnterGameButton.png");
+    dataImage[CHOICE_MAP_PREGAME][MAP_33] = loadMedia(renderer , "../pictures/choice33.png");
+    dataImage[CHOICE_MAP_PREGAME][MAP_55] = loadMedia(renderer , "../pictures/choice55.png");
+    dataImage[CHOICE_MAP_PREGAME][MAP_99] = loadMedia(renderer , "../pictures/choice99.png");
+    dataImage[CHOICE_MAP_PREGAME][MAP_1212] = loadMedia(renderer , "../pictures/choice1212.png");
+    dataImage[CHOICE_MAP_SUCCESS_PREGAME][MAP_33] = loadMedia(renderer , "../pictures/choice33success.png");
+    dataImage[CHOICE_MAP_SUCCESS_PREGAME][MAP_55] = loadMedia(renderer , "../pictures/choice55success.png");
+    dataImage[CHOICE_MAP_SUCCESS_PREGAME][MAP_99] = loadMedia(renderer , "../pictures/choice99success.png");
+    dataImage[CHOICE_MAP_SUCCESS_PREGAME][MAP_1212] = loadMedia(renderer , "../pictures/choice1212success.png");
+    dataImage[CHOICE_PLAYER_AI_SUCCESS_PREGAME][STATE_PLAYER] = loadMedia(renderer , "../pictures/choicePlayPlayerSuccess.png");
+    dataImage[CHOICE_PLAYER_AI_SUCCESS_PREGAME][STATE_AI] = loadMedia(renderer , "../pictures/choicePlayAISuccess.png");
+    dataImage[CHOICE_PLAYER_AI_PREGAME][STATE_PLAYER] = loadMedia(renderer , "../pictures/choicePlayPlayer.png");
+    dataImage[CHOICE_PLAYER_AI_PREGAME][STATE_AI] = loadMedia(renderer , "../pictures/choicePlayAI.png");
+    dataImage[SQUARE_GAME][FIRST_PLAYER] = loadMedia(renderer , "../pictures/player1_X.png");
+    dataImage[SQUARE_GAME][SECOND_PLAYER] = loadMedia(renderer , "../pictures/player2_O.png");
+    dataImage[SQUARE_GAME_HAVEPLAYED][FIRST_PLAYER] = loadMedia(renderer , "../pictures/player1_X_havePlayed.png");
+    dataImage[SQUARE_GAME_HAVEPLAYED][SECOND_PLAYER] = loadMedia(renderer , "../pictures/player2_O_havePlayed.png");
+    dataImage[RESTART_GAME][1] = loadMedia(renderer, "../pictures/RestartGame.png");
+    dataImage[RETURN_MENU_GAME][1] = loadMedia(renderer, "../pictures/returnMenu.png");
+    dataImage[CHOOSE_AI_PREGAME][1] = loadMedia(renderer, "../pictures/chooseAI.png");
+    dataImage[CHOOSE_MAP_PREGAME][1] = loadMedia(renderer, "../pictures/chooseMap.png");
+    dataImage[HEADING_PREGAME][1] = loadMedia(renderer, "../pictures/heading.png");
+    dataImage[BULLETIN_BOARD_PREGAME][EMPTY] = loadMedia(renderer, "../pictures/bulletinBoard.png");
+    dataImage[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_PLAYER_AND_MAP] = loadMedia(renderer, "../pictures/bulletinBoard_chooseAIandMap.png");
+    dataImage[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_PLAYER] = loadMedia(renderer, "../pictures/bulletinBoard_chooseAI.png");
+    dataImage[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_MAP] = loadMedia(renderer, "../pictures/bulletinBoard_chooseMap.png");
+    dataImage[BULLETIN_BOARD_PREGAME][CAN_NOT_PLAY_MAP1212_WITH_AI] = loadMedia(renderer, "../pictures/bulletinBoard_notSupportAIwith1212.png");
+    dataImage[BULLETIN_BOARD_PREGAME][CAN_NOT_PLAY_MAP55_WITH_AI] = loadMedia(renderer, "../pictures/bulletinBoard_notSupportAIwith55.png");
+    dataImage[BULLETIN_BOARD_PREGAME][YOUR_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_yourTurn.png");
+    dataImage[BULLETIN_BOARD_PREGAME][AI_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_AIturn.png");
+    dataImage[BULLETIN_BOARD_PREGAME][PLAYER1_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_turnPlayer1.png");
+    dataImage[BULLETIN_BOARD_PREGAME][PLAYER2_TURN] = loadMedia(renderer, "../pictures/bulletinBoard_turnPlayer2.png");
+    dataImage[BULLETIN_BOARD_PREGAME][ENDGAME] = loadMedia(renderer, "../pictures/bulletinBoard_endGame.png");
+    dataImage[BULLETIN_BOARD_PREGAME][ENDGAME_ADMIT_LOSE] = loadMedia(renderer, "../pictures/bulletinBoard_endGameAdmit.png");
+    dataImage[BULLETIN_BOARD_PREGAME][NOT_CHOOSE_LEVEL] = loadMedia(renderer, "../pictures/bulletinBoard_chooseLevel.png");
+    dataImage[ENDGAME_GAME][YOU_WIN] = loadMedia(renderer, "../pictures/bulletinBoard_youWin.png");
+    dataImage[ENDGAME_GAME][YOU_LOSE] = loadMedia(renderer, "../pictures/bulletinBoard_youLose.png");
+    dataImage[ENDGAME_GAME][DRAW] = loadMedia(renderer, "../pictures/bulletinBoard_draw.png");
+    dataImage[ENDGAME_GAME][PLAYER1_WIN] = loadMedia(renderer, "../pictures/bulletinBoard_player1win.png");
+    dataImage[ENDGAME_GAME][PLAYER2_WIN] = loadMedia(renderer, "../pictures/bulletinBoard_player2win.png");
+    dataImage[CHOICE_LEVEL_PREGAME][EASY] = loadMedia(renderer, "../pictures/choiceLevelEasy.png");
+    dataImage[CHOICE_LEVEL_PREGAME][MEDIUM] = loadMedia(renderer, "../pictures/choiceLevelMedium.png");
+    dataImage[CHOICE_LEVEL_PREGAME][HARD] = loadMedia(renderer, "../pictures/choiceLevelHard.png");
+    dataImage[CHOICE_LEVEL_PREGAME_SUCCESS][EASY] = loadMedia(renderer, "../pictures/choiceLevelEasy_success.png");
+    dataImage[CHOICE_LEVEL_PREGAME_SUCCESS][MEDIUM] = loadMedia(renderer, "../pictures/choiceLevelMedium_success.png");
+    dataImage[CHOICE_LEVEL_PREGAME_SUCCESS][HARD] = loadMedia(renderer, "../pictures/choiceLevelHard_success.png");
+
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1){
         printf("%s", Mix_GetError());
     }
