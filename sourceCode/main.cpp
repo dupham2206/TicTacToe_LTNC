@@ -31,6 +31,7 @@ int main(int argc, char* argv[]){
                                       PreTictactoe.getChooseSizeOfBoard().second);
             Tictactoe.setNumberOfPieceConsecutiveToWin(PreTictactoe.GetChoiceNumberOfPieceConsecutiveToWin());
             Tictactoe.setWhoPlay(PreTictactoe.getAIorPlayer());
+            Tictactoe.setStateSound(PreTictactoe.getStateSound());
             Tictactoe.setAllAttribute();
             Tictactoe.render(renderer);
             while(inGame) Tictactoe.handleEvent(window, renderer, inGame);

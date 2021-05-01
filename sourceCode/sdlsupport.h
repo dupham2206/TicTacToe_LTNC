@@ -96,7 +96,8 @@ enum typeOfImage
     BULLETIN_BOARD_PREGAME,
     ENDGAME_GAME,
     CHOICE_LEVEL_PREGAME,
-    CHOICE_LEVEL_PREGAME_SUCCESS
+    CHOICE_LEVEL_SUCCESS_PREGAME,
+    SOUND_PREGAME
 };
 
 enum stateOfReporter {
@@ -143,16 +144,21 @@ enum stateOfPlayer {
     SECOND_PLAYER,
     TWO_PLAYER_DRAW,
 };
-enum chunk {
+enum stateChunk {
     CLICK,
     ENDGAME_MUSIC,
     ERROR
 };
-enum levelGame {
+enum stateLevelGame {
     NOT_HAVE_ANYTHING,
     EASY,
     MEDIUM,
     HARD
+};
+enum stateOfSound {
+    NULLLLLL,
+    ON,
+    OFF,
 };
 
 void setData(SDL_Renderer* renderer){
@@ -199,9 +205,11 @@ void setData(SDL_Renderer* renderer){
     dataImage[CHOICE_LEVEL_PREGAME][EASY] = loadMedia(renderer, "../pictures/choiceLevelEasy.png");
     dataImage[CHOICE_LEVEL_PREGAME][MEDIUM] = loadMedia(renderer, "../pictures/choiceLevelMedium.png");
     dataImage[CHOICE_LEVEL_PREGAME][HARD] = loadMedia(renderer, "../pictures/choiceLevelHard.png");
-    dataImage[CHOICE_LEVEL_PREGAME_SUCCESS][EASY] = loadMedia(renderer, "../pictures/choiceLevelEasy_success.png");
-    dataImage[CHOICE_LEVEL_PREGAME_SUCCESS][MEDIUM] = loadMedia(renderer, "../pictures/choiceLevelMedium_success.png");
-    dataImage[CHOICE_LEVEL_PREGAME_SUCCESS][HARD] = loadMedia(renderer, "../pictures/choiceLevelHard_success.png");
+    dataImage[CHOICE_LEVEL_SUCCESS_PREGAME][EASY] = loadMedia(renderer, "../pictures/choiceLevelEasy_success.png");
+    dataImage[CHOICE_LEVEL_SUCCESS_PREGAME][MEDIUM] = loadMedia(renderer, "../pictures/choiceLevelMedium_success.png");
+    dataImage[CHOICE_LEVEL_SUCCESS_PREGAME][HARD] = loadMedia(renderer, "../pictures/choiceLevelHard_success.png");
+    dataImage[SOUND_PREGAME][ON] = loadMedia(renderer, "../pictures/sound_on.png");
+    dataImage[SOUND_PREGAME][OFF] = loadMedia(renderer, "../pictures/sound_off.png");
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1){
         printf("%s", Mix_GetError());

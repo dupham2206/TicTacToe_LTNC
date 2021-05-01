@@ -20,7 +20,7 @@ private:
     Button returnMenuButton;
     AI* botPlayer;
     int stateOfBulletinBoard;
-
+    int stateSound;
     int numberOfPieceConsecutiveToWin;
     pair<int,int> sizeOfBoard;
     pair<int,int> squareHavingPlayed;
@@ -82,9 +82,12 @@ public:
             botPlayer->setNumStepToWin(number);
     }
     void setLevelOfAI(int stateLevel){
-        if(stateLevel == EASY) botPlayer = new AIextendEasyMode();
+        if(stateLevel == EASY || stateLevel == NOT_HAVE_ANYTHING) botPlayer = new AIextendEasyMode();
         if(stateLevel == MEDIUM) botPlayer = new AIextendMediumMode();
         if(stateLevel == HARD) botPlayer = new AIextendHardMode();
+    }
+    void setStateSound(int state){
+        stateSound = state;
     }
     void setAllAttribute(){
         setAttributeForAllSquares();
@@ -133,7 +136,7 @@ public:
         square[squareHavingPlayed.first][squareHavingPlayed.second].render(renderer, 0, 1);
         square[x][y].render(renderer, 1, 1);
         squareHavingPlayed = {x , y};
-        Mix_PlayChannel(-1, dataChunk[CLICK], 0);
+        if(stateSound == ON) Mix_PlayChannel(-1, dataChunk[CLICK], 0);
         botPlayer->setBoardState(y , x, turnOfPlayer);
         changeTurn(renderer);
         winner = PlayerWinGame();
@@ -157,7 +160,7 @@ public:
                             square[squareHavingPlayed.first][squareHavingPlayed.second].render(renderer, 0, 1);
                             square[i][j].render(renderer, 1, 1);
                             squareHavingPlayed = {i , j};
-                            Mix_PlayChannel(-1, dataChunk[CLICK], 0);
+                            if(stateSound == ON) Mix_PlayChannel(-1, dataChunk[CLICK], 0);
                             botPlayer->setBoardState(j , i, turnOfPlayer);
                             changeTurn(renderer);
                             winner = PlayerWinGame();
@@ -194,7 +197,7 @@ public:
         SDL_RenderPresent(renderer);
     }
     void endGame(SDL_Renderer* renderer){
-        Mix_PlayChannel(-1, dataChunk[ENDGAME_MUSIC], 0);
+        if(stateSound == ON) Mix_PlayChannel(-1, dataChunk[ENDGAME_MUSIC], 0);
         if(winner == TWO_PLAYER_DRAW){
             RenderMedia(renderer, dataImage[ENDGAME_GAME][DRAW],
                     3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 3 , SCREEN_WIDTH/ 4, SCREEN_WIDTH * 5 / 48);

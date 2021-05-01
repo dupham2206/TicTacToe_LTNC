@@ -16,10 +16,12 @@ private:
     Button ChoicePlayerAI[4]; // 2 button choose play with AI or play with another player
     Button ChoiceLevel[4];
     Button EnterToGame;
+    Button ChoiceSound;
     int currentButtonChoosingMap = NOT_CHOOSE;
     int currentButtonChoosingPlayerAI = STATE_EMPTY; // Not choose
     int currentLevelChoosing = NOT_HAVE_ANYTHING;
     int stateOfBulletinBoard = EMPTY;
+    int sound = ON;
 
     void setUpForInfoOfMap(){
         choiceSizeOfBoard[MAP_33] = {3 , 3};
@@ -66,6 +68,12 @@ private:
             ChoiceLevel[i].setStateButton(i);
         }
     }
+    void setUpForButtonChoiceSound(){
+        ChoiceSound.setPositionTopLeft(0, SCREEN_HEIGHT * 11 / 12);
+        ChoiceSound.setLengthOfButton(SCREEN_WIDTH / 9, SCREEN_HEIGHT / 12);
+        ChoiceSound.setTypeOfButton(SOUND_PREGAME);
+        ChoiceSound.setStateButton(sound);
+    }
     void checkEventForMapButton(SDL_Event &e, SDL_Renderer* renderer){
         for(int i = 1; i <= sizeOfChoiceMap; ++i){
             if(ChoiceMap[i].handleEventButton(e, CHOICE_MAP_PREGAME, i, i) == true){ // State k thay doi nen de i va i
@@ -92,13 +100,13 @@ private:
         if(EnterToGame.handleEventButton(e, ENTER_PREGAME, true , true) == true){
             if(currentButtonChoosingMap && currentButtonChoosingPlayerAI){
                 if(currentButtonChoosingMap == MAP_55 && currentButtonChoosingPlayerAI == STATE_AI){
-                    Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                    if(sound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                     stateOfBulletinBoard = CAN_NOT_PLAY_MAP55_WITH_AI;
                     render(renderer);
                 }
                 else if((currentButtonChoosingMap == MAP_1212 || currentButtonChoosingMap == MAP_99) &&
                         currentButtonChoosingPlayerAI == STATE_AI && currentLevelChoosing == NOT_HAVE_ANYTHING){
-                    Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                    if(sound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                     stateOfBulletinBoard = NOT_CHOOSE_LEVEL;
                     render(renderer);
                 }
@@ -106,7 +114,7 @@ private:
                 else inGame = true;
             }
             else if(currentButtonChoosingMap == NOT_CHOOSE || currentButtonChoosingPlayerAI == STATE_EMPTY){
-                Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                if(sound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                 if(currentButtonChoosingMap && !currentButtonChoosingPlayerAI){
                     stateOfBulletinBoard = NOT_CHOOSE_PLAYER;
                     render(renderer);
@@ -129,21 +137,24 @@ private:
             if(ChoiceLevel[i].handleEventButton(e, CHOICE_LEVEL_PREGAME , i, i) == true){
                 if(currentLevelChoosing)
                     ChoiceLevel[currentLevelChoosing].setTypeOfButton(CHOICE_LEVEL_PREGAME);
-                ChoiceLevel[i].setTypeOfButton(CHOICE_LEVEL_PREGAME_SUCCESS);
+                ChoiceLevel[i].setTypeOfButton(CHOICE_LEVEL_SUCCESS_PREGAME);
                 currentLevelChoosing = i;
                 render(renderer);
             }
         }
     }
+    void checkEventForSoundButton(SDL_Event &e, SDL_Renderer* renderer){
+        if(ChoiceSound.handleEventButton(e, SOUND_PREGAME , ON, OFF) == true){
+            sound = OFF;
+            render(renderer);
+        }
+        else if(ChoiceSound.handleEventButton(e, SOUND_PREGAME , OFF, ON) == true){
+            sound = ON;
+            render(renderer);
+        }
+    }
 
 public:
-    void setUpPreGame(){
-        setUpForInfoOfMap();
-        setUpForButtonMap();
-        setUpForButtonPlayerAI();
-        setUpForButtonEnterGame();
-        setUpForButtonChoiceLevel();
-    }
     pair<int,int> getChooseSizeOfBoard(){
         return choiceSizeOfBoard[currentButtonChoosingMap];
     }
@@ -162,6 +173,17 @@ public:
         currentLevelChoosing = 0;
         return level;
     }
+    int getStateSound(){
+        return sound;
+    }
+    void setUpPreGame(){
+        setUpForInfoOfMap();
+        setUpForButtonMap();
+        setUpForButtonPlayerAI();
+        setUpForButtonEnterGame();
+        setUpForButtonChoiceLevel();
+        setUpForButtonChoiceSound();
+    }
     void handleEvent(SDL_Window* window, SDL_Renderer* renderer, bool &inGame){
         SDL_Event e;
         while( SDL_PollEvent( &e )){
@@ -171,6 +193,7 @@ public:
                 checkEventForPlayerAIButton(e, renderer);
                 checkEventForEnterButton(e, renderer, inGame);
                 checkEventForLevelButton(e, renderer);
+                checkEventForSoundButton(e, renderer);
             }
         }
     }
@@ -188,6 +211,8 @@ public:
             for(int i = 1; i <= 3; ++i)
                 ChoiceLevel[i].render(renderer, false, false);
         }
+        // render sound button (on/off)
+        ChoiceSound.render(renderer, false, false);
         // render enter button
         EnterToGame.render(renderer, false, false);
         // render title of game
