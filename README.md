@@ -48,6 +48,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 
 ### button.h:
 #### Chứa class Button. Bất kì đối tượng nút nào để ấn và tạo sự kiện trong game đều tạo từ class Button.
+####
 **private:**
 - int typeOfButton: loại button, ví dụ như button hiện thị "X","O", button restart, button returnMenu sẽ được ghi lại qua typeOfButton với những thông số khác nhau để đánh dấu(qua enum ở SDLsupport)
 - int stateButton: chỉ các button square dùng để đánh đấu là ô đấy có X, có O hay trống. Nhưng vì hồi đấy chưa biết đến kế thừa nên biến này vẫn xuất hiện.
@@ -56,6 +57,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 
 (hàm ở trong private là hàm hỗ trợ các hàm public bên ngoài).
 - bool checkInsideButton(int x,int y): trả về 1 nếu điểm (x,y) nằm trong button. Hỗ trợ check sự kiện ấn click.
+####
 **public:**
 - void setTypeOfButton(int type): set type từ bên ngoài
 - void setPositionTopLeft(int _x,int _y):
@@ -71,7 +73,8 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 
 ### pregame.h:
 #### Chứa menu:
-##### + tiêu đề game(trên cùng)
+#####
++ tiêu đề game(trên cùng)
 + bảng thông báo cho người chơi(bulletinBoard ở góc phải trên): Thông báo các trạng thái lỗi.
 + tiêu đề "choose map options": trước khi vào chơi phải chọn map sẽ chơi.
 + các button map để chọn ngay dưới tiêu đề(3x3, 5x5, 9x9, 12x12).
@@ -81,6 +84,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 + sound: trạng thái âm thanh đang bật hay tắt
 + easy, medium, hard: các mức chọn mức độ khó của AI. Chỉ xuất hiện khi ấn vào map 9x9 hoặc 12x12 và ấn chọn chơi với AI.
 #### cài đặt:
+####
 **private:**
 - pair<int, int> choiceSizeOfBoard[4]: những sự lựa chọn về map có những size gì(ví dụ map 3x3 thi giá trị sẽ là pair {3,3}.
 - int choiceNumberOfPieceConsecutiveToWin[4]: những sự lựa chọn về map bao quân X/O liên tiếp để thắng/thua(ví dụ 12x12 cần 5, 5x5 cần 4
@@ -106,7 +110,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void checkEventForEnterButton: tương tự trên.
 - void checkEventForLevelButton: tương tự trên.
 - void checkEventForSoundButton: tương tự trên.
-
+####
 **public**
 - pair<int,int> getChooseSizeOfBoard(): lấy thông tin dài rộng của bàn chơi. Ví dụ map 3x3 có chiều rộng 3, chiều dài 3.
 - int GetChoiceNumberOfPieceConsecutiveToWin(): Thông tin số quân liên tiếp để thắng.
@@ -126,6 +130,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 + button restart.
 + button return Menu(Pregame).
 #### cài đặt:
+####
 **private:**
 - Button square[20][20]: các button hiển thị trống, "X", "O".
 - Button restartButton:
@@ -152,6 +157,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void restart: restart lại game thành ván mới nhưng vẫn map đấy và đánh với người/máy đấy.
 - void renderBulletinBoard: render bảng thông báo.
 - void endGame(SDL_Renderer* renderer): kết thúc game, phát ra âm thanh kết thúc, in ra trạng thái thắng thua hòa, in lại bảng thông báo.
+####
 **public:**
 - void setWhoPlay(int AIplay):  gọi từ bên ngoài vào xem có chơi với AI hay không.
 - void setSizeOfBoard(int x,int y): gọi từ bên ngoài set sizeMap.
