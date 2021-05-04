@@ -74,12 +74,9 @@ void quitSDL(SDL_Window* window, SDL_Renderer* renderer){
 
 SDL_Texture* dataImage[20][20];
 Mix_Chunk* dataChunk[10];
-Mix_Music* dataMusic[10];
 static const int SCREEN_WIDTH = 800;
 static const int SCREEN_HEIGHT = 600;
 static const string WINDOW_TITLE = "TICTACTOE GAME";
-static const int directX[10] = {1, 1, 0, 1, 0, -1, -1, -1};
-static const int directY[10] = {1, 0, 1, -1, -1, 1, 0, -1};
 
 enum typeOfImage
 {
@@ -103,7 +100,7 @@ enum typeOfImage
     SOUND_PREGAME
 };
 
-enum stateOfReporter {
+enum stateOfBULLETINBOARD {
     EMPTY,
     NOT_CHOOSE_PLAYER_AND_MAP,
     NOT_CHOOSE_PLAYER,

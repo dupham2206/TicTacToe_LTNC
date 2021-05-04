@@ -24,6 +24,8 @@ class Game {
     int turnOfPlayer = FIRST_PLAYER;
     int winner = NOT_ENDGAME;
     bool isPlayWithAI;
+    const int directX[10] = {1, 1, 0, 1, 0, -1, -1, -1};
+    const int directY[10] = {1, 0, 1, -1, -1, 1, 0, -1};
 private:
     bool checkFullLandOfPlayer(int posX, int posY, int dX, int dY, int landOfPlayer);
     void setAttributeForAllSquares();
