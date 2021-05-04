@@ -173,11 +173,13 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 
 - virtual int cntContinue(int x, int y, int dx, int dy, int statePlayer){}: hàm trừu tượng, đếm số ô lợi thế và trả về giá trị điểm. Mỗi chế độ thừa kế AI là easy, hard, medium sẽ khác nhau ở hàm này.
 - bool checkInsideBoard(int x,int y): check xem vị trí đấy có ở trong bàn chơi không. Ví dụ map 3x3, ô (5,4) không ở trong màn chơi.(cho ra protected vì lớp con dùng)
+####
 **private:**
 - int minimax(bool isTurnOfAI, int alpha, int beta, int depth): hàm minimax(trình bày ở trên).
 - int heuristicValue(): hàm đánh giá trạng thái của bàn cờ đang chơi lợi thế cho ai.
 - bool havePlayerWin(int turnOfPlayer): check xem người "turnOfPlayer" thắng chưa?
 - bool gameOver(): check xem hết quân để đánh chưa? (board full but draw).
+####
 **public:**
 - void setBoardState(int i,int j, int value):
 - void setSizeOfBoard(int x,int y):
