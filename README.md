@@ -32,7 +32,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - Kiến thức về OOP: lớp, đối tượng, tính đóng gói, tính thừa kế, lớp trừu tượng. (tham khảo qua giáo trình OOP_2013 của ĐHCN-ĐHQGHN)
 - Kiến thức về Trí tuệ nhân tạo: các chiến lược tìm kiếm có đối thủ: thuật toán minimax, prunning alpha-beta.(tham khảo qua google, giáo trình trí tuệ nhân tạo)
 - Kiến thức về game cờ caro: Để viết hàm đánh giá tốt cho AI trong game.
-## 2. Cài đặt:
+## 2. Cài đặt chương trình:
 ### sdlsupport.h:
 #### Chứa những biến toàn cục liên quan đến window và data, những hàm mà SDL2 support, hàm load hình ảnh và âm thanh ,nhiều enum đánh dấu đặc điểm dữ liệu.
 - loadMedia(): load 1 ảnh [tham khảo lazyfoo rồi chỉnh sửa lại].
@@ -83,7 +83,8 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 + enterGame: button vào game
 + sound: trạng thái âm thanh đang bật hay tắt
 + easy, medium, hard: các mức chọn mức độ khó của AI. Chỉ xuất hiện khi ấn vào map 9x9 hoặc 12x12 và ấn chọn chơi với AI.
-#### cài đặt:
+####
+*cài đặt:*
 ####
 **private:**
 - pair<int, int> choiceSizeOfBoard[4]: những sự lựa chọn về map có những size gì(ví dụ map 3x3 thi giá trị sẽ là pair {3,3}.
@@ -129,7 +130,8 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 + ảnh thông báo ai thắng(ngay dưới bảng thông báo, kết thúc game mới có).
 + button restart.
 + button return Menu(Pregame).
-#### cài đặt:
+####
+*cài đặt:*
 ####
 **private:**
 - Button square[20][20]: các button hiển thị trống, "X", "O".
@@ -169,7 +171,9 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void render: render giao diện đối tượng game. bao gồm gọi render tất cả ảnh và button.
 
 ###AI.h: là class chứa thuật toán minimax cùng hàm đánh giá và các biến liên quan đến bàn chơi.
-#### cài đặt:
+####
+*cài đặt:*
+####
 **protected: (để kế thừa)**
 - const int dx[10] = {1, 1, 0, -1, 0, 1, -1, -1}: hướng loang theo chiều rộng.
 - const int dy[10] = {1, 0, 1, 1, -1, -1, 0, -1}:
