@@ -227,10 +227,10 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void setSizeOfBoard(int x,int y):
 - void setNumStepToWin(int value):
 - pair<int,int> bestMove(): trả về ô mà AI sẽ đi sau khi duyệt minimax.
-###AIextendEasy.h: là class kế thừa từ class AI, có thuật toán chỉ biết chặn, như chọn nước để chặn thì cũng rất kém.(làm suy yếu từ AIextendMedium)
-###AIextendMedium.h: là class kế thừa từ class AI, có thuật toán chỉ biết chặn, như chọn nước để chặn khá khôn, biết nước sẽ thắng.(làm suy yếu từ AIextendHard)
-###AIextendHard.h: là class kế thừa từ class AI, không chỉ biết chặn mà còn biết tấn công tạo nước đôi cực tốt, là niềm tự hào của game nào cũng như người tạo ra game này.
-###main.cpp:
+### AIextendEasy.h: là class kế thừa từ class AI, có thuật toán chỉ biết chặn, như chọn nước để chặn thì cũng rất kém.(làm suy yếu từ AIextendMedium)
+### AIextendMedium.h: là class kế thừa từ class AI, có thuật toán chỉ biết chặn, như chọn nước để chặn khá khôn, biết nước sẽ thắng.(làm suy yếu từ AIextendHard)
+### AIextendHard.h: là class kế thừa từ class AI, không chỉ biết chặn mà còn biết tấn công tạo nước đôi cực tốt, là niềm tự hào của game nào cũng như người tạo ra game này.
+### main.cpp:
 - chứa biến inGame(= 1 là đang ở trong game, = 0 là đang ở preGame).
 - chứa các biến khởi tạo cho SDL.
 - gọi hàm setData từ SDLsupport.
