@@ -6,17 +6,21 @@
 #### 1.2 Kiến thưc áp dụng:
 #### 1.3 Chia sẻ về quá trình làm game:
 ### 2. Cài đặt chương trình:
-#### sdlsupport.h
-#### button.h
-#### pregame.h
-#### game.h
-#### AI.h
-#### AIextendEasy.h
-#### AIextendMedium.h
-#### AIextendHard.h
-#### main.cpp
+### - sdlsupport.h
+### - button.h
+### - pregame.h
+### - game.h
+### - AI.h
+### - AIextendEasy.h
+### - AIextendMedium.h
+### - AIextendHard.h
+### - main.cpp
 
 ####
+
+
+
+
 ####
 ![alt](https://github.com/dupham2206/TicTacToe_LTNC/blob/master/pictures/demo.png)
 #### Hình 1
