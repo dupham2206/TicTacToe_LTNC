@@ -3,8 +3,18 @@
 
 ### 1. Tổng quan về game:
 #### 1.1 Giới thiệu:
-#### 1.2 Kie
-
+#### 1.2 Kiến thưc áp dụng:
+#### 1.3 Chia sẻ về quá trình làm game:
+### 2. Cài đặt chương trình:
+#### sdlsupport.h
+#### button.h
+#### pregame.h
+#### game.h
+#### AI.h
+#### AIextendEasy.h
+#### AIextendMedium.h
+#### AIextendHard.h
+#### main.cpp
 
 ####
 ####
@@ -25,7 +35,7 @@ Game dùng duy nhất chuột để chơi.
 2 người chơi sẽ lần lượt đánh "X" và đánh "O" cho đến khi đủ k "X" liên tiếp hoặc k "O" liên tiếp theo hàng dọc, ngang hoặc chéo thì người chơi đó thắng hoặc thua. Nếu không ai có thể đạt được như vậy thì trò chơi sẽ hòa.
 Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 thì k = 4, 9x9 và 12x12 thì k = 12. Ngoài chế độ chơi 2 người với nhau, TICTACTOE còn được thiết kế để người chơi chơi với AI ở bàn 3x3 và 9x9, 12x12 với các mức độ chơi easy, medium, hard.
 
-### 1.2 Kiến thức sử dụng:
+### 1.2 Kiến thức áp dụng:
 ####
 - Ngôn ngữ lập trình C++.
 - Thư viện đồ họa SDL2 qua slide cô Châu và lazyfoo.
@@ -48,7 +58,8 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - Em duyệt đến đâu, e đánh giá đến đấy luôn. Rồi sort lại và chỉ phát triển 1 nửa số đỉnh ở phần trên của sort. Thời gian chạy vẫn tầm 5s mà đánh cũng chả thông minh hơn. Giảm số đỉnh phát triển xuống 1/3 thì còn ngu hơn nữa. Dù em đã viết dần lại hàm đánh giá cho thông minh hơn, nhưng việc cắt đi nhánh dù sort rổi cũng làm mất đi khá nhiều con đường sáng lạng.
 - Có những nước đi căn bản là lúc đầu thấy tốt nhưng về sau bế tắc, lúc đầu tính điểm kém nhưng về sau lại tốt. Vì vậy cắt đi thế là không hiệu quả. Nhưng sau này em mới nhận ra. Còn trong tầm 2-3 tuần, em chỉ nghĩ do em đánh giá kém và viết đi viết lại hàm đánh giá.
 - Để rồi tuyệt vọng rồi, không biết làm cách nào nữa. Em định nộp con AI lởm luôn. Nhưng tự nhiên đầu lại nảy việc thử lại depth = 4 xem sao. Không ngờ nó lại nhanh hơn rất nhiều, đánh lại cực kì khôn. Vì hàm đánh giá đủ tốt, phát triển 4 nước thôi thì vẫn là tốt. Khoảnh khắc sửa được rất là sung sướng.
-- Thế rồi lấy đấy là hard, em chặn khả năng tấn công của AI và cho đấy là level medium. Em chặn tiếp khả năng chặn của AI thành kém thì thành mode easy. Em chỉ lại đồ họa và chỉnh sửa lại code nữa và nó thành như bây giờ. Phải nó làm em khá tự hào về game này, Tự hào về con AI em viết ra chạy được map 12x12 mượt mà lại đánh tốt.
+- Thế rồi em chia level bằng cách kế thừa. Lấy AI thông minh đấy là hard, em chặn khả năng tấn công của AI và cho đấy là level medium. Em chặn tiếp khả năng chặn của AI thành kém thì thành mode easy. Em chỉ lại đồ họa và chỉnh sửa lại code nữa và nó thành như bây giờ. Phải nó làm em khá tự hào về game này, Tự hào về con AI em viết ra chạy được map 12x12 mượt mà lại đánh tốt.
+
 ## 2. Cài đặt chương trình:
 ### sdlsupport.h:
 #### Chứa những biến toàn cục liên quan đến window và data, những hàm mà SDL2 support, hàm load hình ảnh và âm thanh ,nhiều enum đánh dấu đặc điểm dữ liệu.
