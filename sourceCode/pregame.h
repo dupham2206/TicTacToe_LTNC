@@ -5,8 +5,8 @@
 #include"button.h"
 
 class PreGame {
-    pair<int, int> choiceSizeOfBoard[SIZE_OF_CHOICE_MAP];
-    int choiceNumberOfPieceConsecutiveToWin[SIZE_OF_CHOICE_MAP];
+    pair<int, int> choiceSizeOfBoard[SIZE_OF_CHOICE_MAP + 2];
+    int choiceNumberOfPieceConsecutiveToWin[SIZE_OF_CHOICE_MAP + 2];
     Button ChoiceMap[SIZE_OF_CHOICE_MAP + 2]; // 4 button choice map
     Button ChoicePlayerAI[SIZE_OF_CHOICE_PLAYER_AI + 2]; // 2 button choose play with AI or play with another player
     Button ChoiceLevel[SIZE_OF_CHOICE_LEVEL + 2];

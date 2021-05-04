@@ -111,8 +111,9 @@ int Game::PlayerWinGame(){
             if(landOfPlayer){ // square have X or O
                 ++cntSquarePlayed;
                 for(int k = 0; k < 8; ++k)
-                    if(checkFullLandOfPlayer(i, j, directX[k], directY[k], landOfPlayer))
+                    if(checkFullLandOfPlayer(i, j, directX[k], directY[k], landOfPlayer)){
                         return landOfPlayer;
+                    }
             }
         }
     }
