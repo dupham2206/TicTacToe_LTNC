@@ -18,21 +18,23 @@
 
 ## 1. Tổng quan về game:
 ### 1.1 Giới thiệu:
-#### TICTACTOE là game được phát triển bởi Phạm Tiến Du, MSV 20020039 cho bài tập lớn môn LTNC INT2215 6.
+####
+TICTACTOE là game được phát triển bởi Phạm Tiến Du, MSV 20020039 cho bài tập lớn môn LTNC INT2215 6.
 Game dựa trên game cờ ca rô tuổi thơ. Board của game là một lưới ô vuông m * n.
 Game dùng duy nhất chuột để chơi.
 2 người chơi sẽ lần lượt đánh "X" và đánh "O" cho đến khi đủ k "X" liên tiếp hoặc k "O" liên tiếp theo hàng dọc, ngang hoặc chéo thì người chơi đó thắng hoặc thua. Nếu không ai có thể đạt được như vậy thì trò chơi sẽ hòa.
 Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 thì k = 4, 9x9 và 12x12 thì k = 12. Ngoài chế độ chơi 2 người với nhau, TICTACTOE còn được thiết kế để người chơi chơi với AI ở bàn 3x3 và 9x9, 12x12 với các mức độ chơi easy, medium, hard.
 
 ### 1.2 Kiến thức sử dụng:
-#### - Ngôn ngữ lập trình C++.
+####
+- Ngôn ngữ lập trình C++.
 - Thư viện đồ họa SDL2 qua slide cô Châu và lazyfoo.
 - Kiến thức về OOP: lớp, đối tượng, tính đóng gói, tính thừa kế, lớp trừu tượng. (tham khảo qua giáo trình OOP_2013 của ĐHCN-ĐHQGHN)
 - Kiến thức về Trí tuệ nhân tạo: các chiến lược tìm kiếm có đối thủ: thuật toán minimax, prunning alpha-beta.(tham khảo qua google, giáo trình trí tuệ nhân tạo)
 - Kiến thức về game cờ caro: Để viết hàm đánh giá tốt cho AI trong game.
 ## 2. Cài đặt:
 ### sdlsupport.h:
-#### *Chứa những biến toàn cục liên quan đến window và data, những hàm mà SDL2 support, hàm load hình ảnh và âm thanh ,nhiều enum đánh dấu đặc điểm dữ liệu.
+#### Chứa những biến toàn cục liên quan đến window và data, những hàm mà SDL2 support, hàm load hình ảnh và âm thanh ,nhiều enum đánh dấu đặc điểm dữ liệu.
 - loadMedia(): load 1 ảnh [tham khảo lazyfoo rồi chỉnh sửa lại].
 - RenderMedia(): render 1 ảnh [tham khảo lazyfoo rồi chỉnh sửa lại].
 - logSDLError(): thông báo lỗi và xem có quit chương trình hay không [copy slide cô Châu].
@@ -45,7 +47,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - setData(): load trước tất cả các ảnh, nhạc. Nếu vừa chơi vừa load rất tốn dữ liệu.
 
 ### button.h:
-#### *Chứa class Button. Bất kì đối tượng nút nào để ấn và tạo sự kiện trong game đều tạo từ class Button.
+#### Chứa class Button. Bất kì đối tượng nút nào để ấn và tạo sự kiện trong game đều tạo từ class Button.
 **private:**
 - int typeOfButton: loại button, ví dụ như button hiện thị "X","O", button restart, button returnMenu sẽ được ghi lại qua typeOfButton với những thông số khác nhau để đánh dấu(qua enum ở SDLsupport)
 - int stateButton: chỉ các button square dùng để đánh đấu là ô đấy có X, có O hay trống. Nhưng vì hồi đấy chưa biết đến kế thừa nên biến này vẫn xuất hiện.
@@ -68,7 +70,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - render(): render ảnh của button. Có thể render có khung hoặc không(nút X,O có khung bên ngoài), có thể renderPresent lại luôn hay không(nhằm tạo thẩm mỹ).
 
 ### pregame.h:
-#### *Chứa menu:
+#### Chứa menu:
 ##### + tiêu đề game(trên cùng)
 + bảng thông báo cho người chơi(bulletinBoard ở góc phải trên): Thông báo các trạng thái lỗi.
 + tiêu đề "choose map options": trước khi vào chơi phải chọn map sẽ chơi.
@@ -78,7 +80,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 + enterGame: button vào game
 + sound: trạng thái âm thanh đang bật hay tắt
 + easy, medium, hard: các mức chọn mức độ khó của AI. Chỉ xuất hiện khi ấn vào map 9x9 hoặc 12x12 và ấn chọn chơi với AI.
-#### *cài đặt:
+#### cài đặt:
 **private:**
 - pair<int, int> choiceSizeOfBoard[4]: những sự lựa chọn về map có những size gì(ví dụ map 3x3 thi giá trị sẽ là pair {3,3}.
 - int choiceNumberOfPieceConsecutiveToWin[4]: những sự lựa chọn về map bao quân X/O liên tiếp để thắng/thua(ví dụ 12x12 cần 5, 5x5 cần 4
@@ -116,13 +118,14 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void render(): in ra cái preGame.
 
 ### game.h:
-#### *Chứa game gồm:
-##### + m*m ô button(trống lúc đầu) là board để đánh. m phụ thuộc vào preGame người chơi chọn map gì.
+#### Chứa game gồm:
+#####
++ m*m ô button(trống lúc đầu) là board để đánh. m phụ thuộc vào preGame người chơi chọn map gì.
 + bảng thông báo cho người chơi(bulletinBoard ở góc phải trên): Thông báo lượt của ai, kết thúc trận đấu.
 + ảnh thông báo ai thắng(ngay dưới bảng thông báo, kết thúc game mới có).
 + button restart.
 + button return Menu(Pregame).
-#### *cài đặt:
+#### cài đặt:
 **private:**
 - Button square[20][20]: các button hiển thị trống, "X", "O".
 - Button restartButton:
@@ -160,7 +163,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void render: render giao diện đối tượng game. bao gồm gọi render tất cả ảnh và button.
 
 ###AI.h: là class chứa thuật toán minimax cùng hàm đánh giá và các biến liên quan đến bàn chơi.
-####*cài đặt:
+#### cài đặt:
 **protected: (để kế thừa)**
 - const int dx[10] = {1, 1, 0, -1, 0, 1, -1, -1}: hướng loang theo chiều rộng.
 - const int dy[10] = {1, 0, 1, 1, -1, -1, 0, -1}:
