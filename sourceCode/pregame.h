@@ -2,28 +2,46 @@
 #define PREGAME_H
 
 #include<iostream>
-#include "button.h"
-#include "sdlsupport.h"
+#include"button.h"
 
 class PreGame {
-private:
-    pair<int, int> choiceSizeOfBoard[6];
-    int choiceNumberOfPieceConsecutiveToWin[4];
-    int sizeOfChoiceMap = 4;
-    int sizeOfChoicePlayerAI = 2;
-    int sizeOfChoiceLevel = 3;
-    Button ChoiceMap[6]; // 4 button choice map
-    Button ChoicePlayerAI[4]; // 2 button choose play with AI or play with another player
-    Button ChoiceLevel[4];
+    pair<int, int> choiceSizeOfBoard[SIZE_OF_CHOICE_MAP];
+    int choiceNumberOfPieceConsecutiveToWin[SIZE_OF_CHOICE_MAP];
+    Button ChoiceMap[SIZE_OF_CHOICE_MAP + 2]; // 4 button choice map
+    Button ChoicePlayerAI[SIZE_OF_CHOICE_PLAYER_AI + 2]; // 2 button choose play with AI or play with another player
+    Button ChoiceLevel[SIZE_OF_CHOICE_LEVEL + 2];
     Button EnterToGame;
     Button ChoiceSound;
     int currentButtonChoosingMap = NOT_CHOOSE;
     int currentButtonChoosingPlayerAI = STATE_EMPTY; // Not choose
     int currentLevelChoosing = NOT_HAVE_ANYTHING;
     int stateOfBulletinBoard = EMPTY;
-    int sound = ON;
+    int currentSound = ON;
+private:
+    void setUpForInfoOfMap();
+    void setUpForButtonMap();
+    void setUpForButtonPlayerAI();
+    void setUpForButtonEnterGame();
+    void setUpForButtonChoiceLevel();
+    void setUpForButtonChoiceSound();
+    void checkEventForMapButton(SDL_Event &e, SDL_Renderer* renderer);
+    void checkEventForPlayerAIButton(SDL_Event &e, SDL_Renderer* renderer);
+    void checkEventForEnterButton(SDL_Event &e, SDL_Renderer* renderer, bool &inGame);
+    void checkEventForLevelButton(SDL_Event &e, SDL_Renderer* renderer);
+    void checkEventForSoundButton(SDL_Event &e, SDL_Renderer* renderer);
 
-    void setUpForInfoOfMap(){
+public:
+    pair<int,int> getChooseSizeOfBoard();
+    int GetChoiceNumberOfPieceConsecutiveToWin();
+    int getAIorPlayer();
+    int getLevel();
+    int getStateSound();
+    void setUpPreGame();
+    void handleEvent(SDL_Window* window, SDL_Renderer* renderer, bool &inGame);
+    void render(SDL_Renderer* renderer);
+};
+
+    void PreGame::setUpForInfoOfMap(){
         choiceSizeOfBoard[MAP_33] = {3 , 3};
         choiceNumberOfPieceConsecutiveToWin[MAP_33] = 3;
         choiceSizeOfBoard[MAP_55] = {5 , 5};
@@ -33,7 +51,7 @@ private:
         choiceSizeOfBoard[MAP_1212] = {12 , 12};
         choiceNumberOfPieceConsecutiveToWin[MAP_1212] = 5;
     }
-    void setUpForButtonMap(){
+    void PreGame::setUpForButtonMap(){
         for(int i = 1; i <= 2; ++i){
             for(int j = 1; j <= 2; ++j){
                 int currentSetUp = (i - 1) * 2 + j;
@@ -44,7 +62,7 @@ private:
             }
         }
     }
-    void setUpForButtonPlayerAI(){
+    void PreGame::setUpForButtonPlayerAI(){
         ChoicePlayerAI[STATE_PLAYER].setPositionTopLeft(SCREEN_WIDTH * 89 / 128, SCREEN_HEIGHT * 14 / 24);
         ChoicePlayerAI[STATE_PLAYER].setLengthOfButton(SCREEN_WIDTH / 6, SCREEN_HEIGHT / 8);
         ChoicePlayerAI[STATE_PLAYER].setTypeOfButton(CHOICE_PLAYER_AI_PREGAME);
@@ -54,13 +72,13 @@ private:
         ChoicePlayerAI[STATE_AI].setTypeOfButton(CHOICE_PLAYER_AI_PREGAME);
         ChoicePlayerAI[STATE_AI].setStateButton(STATE_AI);
     }
-    void setUpForButtonEnterGame(){
+    void PreGame::setUpForButtonEnterGame(){
         EnterToGame.setPositionTopLeft(13 * SCREEN_WIDTH / 32, 10 * SCREEN_HEIGHT / 12);
         EnterToGame.setLengthOfButton(SCREEN_WIDTH * 5 / 24 , SCREEN_WIDTH / 9);
         EnterToGame.setTypeOfButton(ENTER_PREGAME);
         EnterToGame.setStateButton(true);
     }
-    void setUpForButtonChoiceLevel(){
+    void PreGame::setUpForButtonChoiceLevel(){
         for(int i = 1; i <= 3; ++i){ // 0 is easy, 1 is medium, 2 is hard
             ChoiceLevel[i].setPositionTopLeft(SCREEN_WIDTH * 13 / 15, SCREEN_HEIGHT * 35 / 48 + (i - 1) * SCREEN_HEIGHT / 15);
             ChoiceLevel[i].setLengthOfButton(SCREEN_WIDTH / 9, SCREEN_HEIGHT / 12);
@@ -68,14 +86,14 @@ private:
             ChoiceLevel[i].setStateButton(i);
         }
     }
-    void setUpForButtonChoiceSound(){
+    void PreGame::setUpForButtonChoiceSound(){
         ChoiceSound.setPositionTopLeft(0, SCREEN_HEIGHT * 11 / 12);
         ChoiceSound.setLengthOfButton(SCREEN_WIDTH / 9, SCREEN_HEIGHT / 12);
         ChoiceSound.setTypeOfButton(SOUND_PREGAME);
-        ChoiceSound.setStateButton(sound);
+        ChoiceSound.setStateButton(currentSound);
     }
-    void checkEventForMapButton(SDL_Event &e, SDL_Renderer* renderer){
-        for(int i = 1; i <= sizeOfChoiceMap; ++i){
+    void PreGame::checkEventForMapButton(SDL_Event &e, SDL_Renderer* renderer){
+        for(int i = 1; i <= SIZE_OF_CHOICE_MAP; ++i){
             if(ChoiceMap[i].handleEventButton(e, CHOICE_MAP_PREGAME, i, i) == true){ // State k thay doi nen de i va i
                 if(currentButtonChoosingMap)
                     ChoiceMap[currentButtonChoosingMap].setTypeOfButton(CHOICE_MAP_PREGAME);
@@ -85,8 +103,8 @@ private:
             }
         }
     }
-    void checkEventForPlayerAIButton(SDL_Event &e, SDL_Renderer* renderer){
-        for(int i = 1; i <= sizeOfChoicePlayerAI; ++i){
+    void PreGame::checkEventForPlayerAIButton(SDL_Event &e, SDL_Renderer* renderer){
+        for(int i = 1; i <= SIZE_OF_CHOICE_PLAYER_AI; ++i){
             if(ChoicePlayerAI[i].handleEventButton(e, CHOICE_PLAYER_AI_PREGAME , i, i) == true){
                 if(currentButtonChoosingPlayerAI)
                     ChoicePlayerAI[currentButtonChoosingPlayerAI].setTypeOfButton(CHOICE_PLAYER_AI_PREGAME);
@@ -96,17 +114,17 @@ private:
             }
         }
     }
-    void checkEventForEnterButton(SDL_Event &e, SDL_Renderer* renderer, bool &inGame){
+    void PreGame::checkEventForEnterButton(SDL_Event &e, SDL_Renderer* renderer, bool &inGame){
         if(EnterToGame.handleEventButton(e, ENTER_PREGAME, true , true) == true){
             if(currentButtonChoosingMap && currentButtonChoosingPlayerAI){
                 if(currentButtonChoosingMap == MAP_55 && currentButtonChoosingPlayerAI == STATE_AI){
-                    if(sound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                    if(currentSound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                     stateOfBulletinBoard = CAN_NOT_PLAY_MAP55_WITH_AI;
                     render(renderer);
                 }
                 else if((currentButtonChoosingMap == MAP_1212 || currentButtonChoosingMap == MAP_99) &&
                         currentButtonChoosingPlayerAI == STATE_AI && currentLevelChoosing == NOT_HAVE_ANYTHING){
-                    if(sound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                    if(currentSound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                     stateOfBulletinBoard = NOT_CHOOSE_LEVEL;
                     render(renderer);
                 }
@@ -114,7 +132,7 @@ private:
                 else inGame = true;
             }
             else if(currentButtonChoosingMap == NOT_CHOOSE || currentButtonChoosingPlayerAI == STATE_EMPTY){
-                if(sound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
+                if(currentSound == ON) Mix_PlayChannel(-1, dataChunk[ERROR], 0);
                 if(currentButtonChoosingMap && !currentButtonChoosingPlayerAI){
                     stateOfBulletinBoard = NOT_CHOOSE_PLAYER;
                     render(renderer);
@@ -130,10 +148,10 @@ private:
             }
         }
     }
-    void checkEventForLevelButton(SDL_Event &e, SDL_Renderer* renderer){
+    void PreGame::checkEventForLevelButton(SDL_Event &e, SDL_Renderer* renderer){
         if((currentButtonChoosingMap != MAP_1212 && currentButtonChoosingMap != MAP_99)
            || currentButtonChoosingPlayerAI != STATE_AI) return;
-        for(int i = 1; i <= sizeOfChoiceLevel; ++i){
+        for(int i = 1; i <= SIZE_OF_CHOICE_LEVEL; ++i){
             if(ChoiceLevel[i].handleEventButton(e, CHOICE_LEVEL_PREGAME , i, i) == true){
                 if(currentLevelChoosing)
                     ChoiceLevel[currentLevelChoosing].setTypeOfButton(CHOICE_LEVEL_PREGAME);
@@ -143,40 +161,38 @@ private:
             }
         }
     }
-    void checkEventForSoundButton(SDL_Event &e, SDL_Renderer* renderer){
+    void PreGame::checkEventForSoundButton(SDL_Event &e, SDL_Renderer* renderer){
         if(ChoiceSound.handleEventButton(e, SOUND_PREGAME , ON, OFF) == true){
-            sound = OFF;
+            currentSound = OFF;
             render(renderer);
         }
         else if(ChoiceSound.handleEventButton(e, SOUND_PREGAME , OFF, ON) == true){
-            sound = ON;
+            currentSound = ON;
             render(renderer);
         }
     }
-
-public:
-    pair<int,int> getChooseSizeOfBoard(){
+    pair<int,int> PreGame::getChooseSizeOfBoard(){
         return choiceSizeOfBoard[currentButtonChoosingMap];
     }
-    int GetChoiceNumberOfPieceConsecutiveToWin(){
+    int PreGame::GetChoiceNumberOfPieceConsecutiveToWin(){
         int chooseMap = currentButtonChoosingMap;
         currentButtonChoosingMap = STATE_EMPTY;
         return choiceNumberOfPieceConsecutiveToWin[chooseMap];
     }
-    int getAIorPlayer(){
+    int PreGame::getAIorPlayer(){
         int chooseAIorPlayer = currentButtonChoosingPlayerAI;
         currentButtonChoosingPlayerAI = STATE_EMPTY;
         return chooseAIorPlayer - 1;
     }
-    int getLevel(){
+    int PreGame::getLevel(){
         int level = currentLevelChoosing;
         currentLevelChoosing = 0;
         return level;
     }
-    int getStateSound(){
-        return sound;
+    int PreGame::getStateSound(){
+        return currentSound;
     }
-    void setUpPreGame(){
+    void PreGame::setUpPreGame(){
         setUpForInfoOfMap();
         setUpForButtonMap();
         setUpForButtonPlayerAI();
@@ -184,7 +200,7 @@ public:
         setUpForButtonChoiceLevel();
         setUpForButtonChoiceSound();
     }
-    void handleEvent(SDL_Window* window, SDL_Renderer* renderer, bool &inGame){
+    void PreGame::handleEvent(SDL_Window* window, SDL_Renderer* renderer, bool &inGame){
         SDL_Event e;
         while( SDL_PollEvent( &e )){
             if(e.type == SDL_QUIT) quitSDL(window, renderer);
@@ -197,13 +213,13 @@ public:
             }
         }
     }
-    void render(SDL_Renderer* renderer){
+    void PreGame::render(SDL_Renderer* renderer){
         SDL_RenderClear(renderer);
         // render choice buttons of map
-        for(int i = 1; i <= sizeOfChoiceMap; ++i)
+        for(int i = 1; i <= SIZE_OF_CHOICE_MAP; ++i)
             ChoiceMap[i].render(renderer, false, false);
         // render choice buttons of AI and Player
-        for(int i = 1; i <= sizeOfChoicePlayerAI; ++i)
+        for(int i = 1; i <= SIZE_OF_CHOICE_PLAYER_AI; ++i)
             ChoicePlayerAI[i].render(renderer, false, false);
         // render choice level
         if((currentButtonChoosingMap == MAP_1212 || currentButtonChoosingMap == MAP_99)
@@ -230,7 +246,6 @@ public:
         SDL_RenderPresent(renderer);
 
     }
-};
 
 
 

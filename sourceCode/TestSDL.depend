@@ -8,12 +8,6 @@
 	<SDL_image.h>
 	"sdlsupport.h"
 
-1616228159 source:c:\users\apc\documents\testsdl\test.cpp
-	<SDL.h>
-	<SDL_image.h>
-	<iostream>
-	<string>
-
 1619523699 c:\users\apc\documents\testsdl\game.h
 	<iostream>
 	"button.h"
@@ -42,49 +36,44 @@
 	<algorithm>
 	"button.h"
 
-1619840510 source:c:\users\apc\documents\testsdl\sourcecode\main.cpp
+1620120429 source:c:\users\apc\documents\testsdl\sourcecode\main.cpp
 	<iostream>
 	<SDL.h>
-	"pregame.h"
 	"game.h"
-	"button.h"
-	<SDL_image.h>
-	"sdlsupport.h"
+	"pregame.h"
 
-1619840859 c:\users\apc\documents\testsdl\sourcecode\pregame.h
+1620122934 c:\users\apc\documents\testsdl\sourcecode\pregame.h
 	<iostream>
 	"button.h"
-	"sdlsupport.h"
 
-1619803871 c:\users\apc\documents\testsdl\sourcecode\button.h
+1620123889 c:\users\apc\documents\testsdl\sourcecode\button.h
 	<iostream>
 	<SDL_image.h>
 	"sdlsupport.h"
 
-1619840585 c:\users\apc\documents\testsdl\sourcecode\sdlsupport.h
+1620122680 c:\users\apc\documents\testsdl\sourcecode\sdlsupport.h
 	<iostream>
 	"SDL_mixer.h"
 
-1619840563 c:\users\apc\documents\testsdl\sourcecode\game.h
+1620120429 c:\users\apc\documents\testsdl\sourcecode\game.h
 	<iostream>
-	"button.h"
 	"AI.h"
 	"AIextendHardMode.h"
 	"AIextendMediumMode.h"
 	"AIextendEasyMode.h"
-	"sdlsupport.h"
+	"button.h"
 
-1619776838 c:\users\apc\documents\testsdl\sourcecode\ai.h
+1620123761 c:\users\apc\documents\testsdl\sourcecode\ai.h
 	<iostream>
 	<algorithm>
 	"button.h"
 
-1619837066 c:\users\apc\documents\testsdl\sourcecode\aiextendhardmode.h
+1620123920 c:\users\apc\documents\testsdl\sourcecode\aiextendhardmode.h
 	"AI.h"
 
-1619777096 c:\users\apc\documents\testsdl\sourcecode\aiextendmediummode.h
+1620116321 c:\users\apc\documents\testsdl\sourcecode\aiextendmediummode.h
 	"AI.h"
 
-1619777079 c:\users\apc\documents\testsdl\sourcecode\aiextendeasymode.h
+1620116321 c:\users\apc\documents\testsdl\sourcecode\aiextendeasymode.h
 	"AI.h"
 

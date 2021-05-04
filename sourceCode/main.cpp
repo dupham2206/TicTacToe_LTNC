@@ -1,11 +1,7 @@
-
 #include <iostream>
 #include <SDL.h>
-#include"pregame.h"
 #include "game.h"
-#include "button.h"
-#include<SDL_image.h>
-#include"sdlsupport.h"
+#include"pregame.h"
 using namespace std;
 
 

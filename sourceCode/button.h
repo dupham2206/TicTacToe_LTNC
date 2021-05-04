@@ -7,11 +7,12 @@
 using namespace std;
 
 class Button {
-private:
     int typeOfButton = -1;
     int stateButton = 0;
     SDL_Point positionTopLeft;
     pair<int,int> lengthOfButton;
+private:
+    bool checkInsideButton(int x,int y);
 public:
     void setTypeOfButton(int type);
     void setPositionTopLeft(int _x,int _y);
@@ -21,9 +22,9 @@ public:
     pair<int,int> getLengthOfButton();
     int getStateButton();
     bool handleEventButton(SDL_Event e, int typeOfButton, int statePre, int stateNext);
-    bool checkInsideButton(int x,int y);
     void render(SDL_Renderer* renderer, bool haveRenderPresent, bool havePattern);
 };
+
 void Button::setTypeOfButton(int type){
     typeOfButton = type;
 }
@@ -84,5 +85,6 @@ void Button::render(SDL_Renderer* renderer, bool haveRenderPresent, bool havePat
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     if(haveRenderPresent) SDL_RenderPresent(renderer);
 }
+
 #endif
 

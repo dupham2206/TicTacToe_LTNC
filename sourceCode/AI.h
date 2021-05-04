@@ -1,4 +1,3 @@
-
 #ifndef AI_H
 #define AI_H
 #include<iostream>
@@ -7,54 +6,30 @@
 using namespace std;
 class AI {
 protected:
-    int cntStep = 0;
     const int dx[10] = {1, 1, 0, -1, 0, 1, -1, -1};
     const int dy[10] = {1, 0, 1, 1, -1, -1, 0, -1};
     int boardState[15][15];
     pair<int,int> sizeOfBoard;
     int numStepToWin;
 
-    int valueEvaluate[200];
-    int cntSizeOfValueEvaluate = 0;
-
+    virtual int cntContinue(int x, int y, int dx, int dy, int statePlayer){}
+    bool checkInsideBoard(int x,int y);
+private:
+    int minimax(bool isTurnOfAI, int alpha, int beta, int depth);
+    int heuristicValue();
+    bool havePlayerWin(int turnOfPlayer);
+    bool gameOver();
 public:
-    void setBoardState(int i,int j, int value){
-        boardState[i][j] = value;
-    }
-    void setSizeOfBoard(int x,int y){
-        sizeOfBoard = {x, y};
-    }
-    void setNumStepToWin(int value){
-        numStepToWin = value;
-    }
-    pair<int,int> bestMove(){
-        cntStep = 0;
-        pair<int,int> thisMove = {0, 0}; // 0,0 is the position not exist in map
-        int score = 0, bestScore = -1e8; // -1e8 is StateLOSE
-        int cntChild = 0;
-        int valueStandard;
-        int depth;
-        if(numStepToWin == 3) depth = 9;
-        else depth = 4;
-        for(int i = 1; i <= sizeOfBoard.second; ++i){
-            for(int j = 1; j <= sizeOfBoard.first; ++j){
-                if(boardState[i][j] == STATE_EMPTY){
-                    boardState[i][j] = STATE_AI;
-                    score = minimax(false, -1e8, 1e8, depth - 1);
-                    boardState[i][j] = STATE_EMPTY;
-                    if(score > bestScore) bestScore = score, thisMove = {j, i};
-                }
-            }
-        }
-        cout << "\n" <<  bestScore << "\n" << cntStep << "\n";
-        return thisMove;
-    }
-    int minimax(bool isTurnOfAI, int alpha, int beta, int depth){
-        ++cntStep;
+    void setBoardState(int i,int j, int value);
+    void setSizeOfBoard(int x,int y);
+    void setNumStepToWin(int value);
+    pair<int,int> bestMove();
+};
+
+int AI::minimax(bool isTurnOfAI, int alpha, int beta, int depth){
         int score = 0, bestScore = 0;
-        int valueStandard, cntChild = 0;
-        if(havePlayer_win(STATE_AI)) return 1e8;
-        else if(havePlayer_win(STATE_PLAYER)) return -1e8;
+        if(havePlayerWin(STATE_AI)) return 1e8;
+        else if(havePlayerWin(STATE_PLAYER)) return -1e8;
         else if(gameOver()) return 0;
         if(depth == 1) return heuristicValue();
         if(isTurnOfAI == true){
@@ -90,7 +65,7 @@ public:
             return bestScore;
         }
     }
-    int heuristicValue(){
+    int AI::heuristicValue(){
         int value = 0;
         for(int x = 1; x <= sizeOfBoard.second; ++x){
             for(int y = 1; y <= sizeOfBoard.first; ++y){
@@ -114,12 +89,11 @@ public:
         }
         return value;
     }
-    virtual int cntContinue(int x, int y, int dx, int dy, int statePlayer){}
-    bool checkInsideBoard(int x,int y){
+    bool AI::checkInsideBoard(int x,int y){
         if(x < 1 || y < 1 || x > sizeOfBoard.second || y > sizeOfBoard.first) return 0;
         return 1;
     }
-    bool havePlayer_win(int turnOfPlayer){
+    bool AI::havePlayerWin(int turnOfPlayer){
         bool yes = 0;
         for(int i = 1; i <= sizeOfBoard.second; ++i){
             for(int j = 1; j <= sizeOfBoard.first; ++j){
@@ -145,14 +119,39 @@ public:
         }
         return false;
     }
-    bool gameOver(){
+    bool AI::gameOver(){
         for(int i = 1; i <= sizeOfBoard.second; ++i)
             for(int j = 1; j <= sizeOfBoard.first; ++j)
                 if(!boardState[i][j]) return 0;
         return 1;
     }
-};
-
+    void AI::setBoardState(int i,int j, int value){
+        boardState[i][j] = value;
+    }
+    void AI::setSizeOfBoard(int x,int y){
+        sizeOfBoard = {x, y};
+    }
+    void AI::setNumStepToWin(int value){
+        numStepToWin = value;
+    }
+    pair<int,int> AI::bestMove(){
+        pair<int,int> thisMove = {0, 0}; // 0,0 is the position not exist in map
+        int score = 0, bestScore = -1e8; // -1e8 is StateLOSE
+        int depth;
+        if(numStepToWin == 3) depth = 9;
+        else depth = 4;
+        for(int i = 1; i <= sizeOfBoard.second; ++i){
+            for(int j = 1; j <= sizeOfBoard.first; ++j){
+                if(boardState[i][j] == STATE_EMPTY){
+                    boardState[i][j] = STATE_AI;
+                    score = minimax(false, -1e8, 1e8, depth - 1);
+                    boardState[i][j] = STATE_EMPTY;
+                    if(score > bestScore) bestScore = score, thisMove = {j, i};
+                }
+            }
+        }
+        return thisMove;
+    }
 
 #endif
 

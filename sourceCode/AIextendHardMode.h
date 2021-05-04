@@ -54,8 +54,8 @@ public:
             else return 0;
         }
         if(block == 0){
-            if(cntWin >= 13) cntWin = 512;
-            else if(cntWin >= 11) cntWin = 64;
+            if(cntWin >= 13) cntWin = 2048;
+            else if(cntWin >= 11) cntWin = 32;
             else if(cntWin >= 8) cntWin = 2;
             else return 0;
         }

@@ -1,8 +1,9 @@
 #ifndef SDLSUPPORT_H
 #define SDLSUPPORT_H
 
-#include<iostream>
+#include <iostream>
 #include "SDL_mixer.h"
+
 using namespace std;
 
 SDL_Texture* loadMedia(SDL_Renderer* Renderer, string path){
@@ -20,6 +21,8 @@ SDL_Texture* loadMedia(SDL_Renderer* Renderer, string path){
     }
     return gTexture;
 }
+
+
 void RenderMedia(SDL_Renderer* renderer, SDL_Texture* gTexture, int topX, int topY, int width, int height){
     SDL_Rect Dest;
     Dest.x = topX + 1;
@@ -160,7 +163,11 @@ enum stateOfSound {
     ON,
     OFF,
 };
-
+enum sizeOfSomething {
+    SIZE_OF_CHOICE_PLAYER_AI = 2,
+    SIZE_OF_CHOICE_LEVEL = 3,
+    SIZE_OF_CHOICE_MAP = 4
+};
 void setData(SDL_Renderer* renderer){
     dataImage[ENTER_PREGAME][1] = loadMedia(renderer , "../pictures/EnterGameButton.png");
     dataImage[CHOICE_MAP_PREGAME][MAP_33] = loadMedia(renderer , "../pictures/choice33.png");
