@@ -1,20 +1,20 @@
 # GAME TICTACTOE
 ## Mục lục:
 
-#### 1. Tổng quan về game:
-##### 1.1 Giới thiệu:
-##### 1.2 Kiến thưc áp dụng:
-##### 1.3 Chia sẻ về quá trình làm game:
-#### 2. Cài đặt chương trình:
-##### - sdlsupport.h
-##### - button.h
-##### - pregame.h
-##### - game.h
-##### - AI.h
-##### - AIextendEasy.h
-##### - AIextendMedium.h
-##### - AIextendHard.h
-##### - main.cpp
+##### 1. Tổng quan về game:
+###### 1.1 Giới thiệu:
+###### 1.2 Kiến thưc áp dụng:
+###### 1.3 Chia sẻ về quá trình làm game:
+##### 2. Cài đặt chương trình:
+###### - sdlsupport.h
+###### - button.h
+###### - pregame.h
+###### - game.h
+###### - AI.h
+###### - AIextendEasy.h
+###### - AIextendMedium.h
+###### - AIextendHard.h
+###### - main.cpp
 
 ####
 
