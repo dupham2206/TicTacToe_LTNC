@@ -2,7 +2,7 @@
 ## Mục lục:
 
 ##### 1. Tổng quan về game:
-######    [1.1 Giới thiệu:](#introdution)
+######    [1.1 Giới thiệu:](#introduction)
 ######    1.2 Kiến thưc áp dụng:
 ######    1.3 Chia sẻ về quá trình làm game:
 ##### 2. Cài đặt chương trình:
