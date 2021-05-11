@@ -2,19 +2,19 @@
 ## Mục lục:
 
 ##### 1. Tổng quan về game:
-###### 1.1 Giới thiệu:
-###### 1.2 Kiến thưc áp dụng:
-###### 1.3 Chia sẻ về quá trình làm game:
+######    [1.1 Giới thiệu:](#introdution)
+######    1.2 Kiến thưc áp dụng:
+######    1.3 Chia sẻ về quá trình làm game:
 ##### 2. Cài đặt chương trình:
-###### - sdlsupport.h
-###### - button.h
-###### - pregame.h
-###### - game.h
-###### - AI.h
-###### - AIextendEasy.h
-###### - AIextendMedium.h
-###### - AIextendHard.h
-###### - main.cpp
+######     - sdlsupport.h
+######     - button.h
+######     - pregame.h
+######     - game.h
+######     - AI.h
+######     - AIextendEasy.h
+######     - AIextendMedium.h
+######     - AIextendHard.h
+######     - main.cpp
 
 ##
 ------------------------------------------------
@@ -33,8 +33,8 @@
 
 
 ## 1. Tổng quan về game:
-### 1.1 Giới thiệu:
-#### {@youtube: https://www.youtube.com/watch?v=HndN6P9ke6U}
+### 1.1 Giới thiệu: <a name="introduction"></a>
+#### [DEMO GAME TRÊN YOUTUBE](https://www.youtube.com/watch?v=tYu1I2Vqdb8&t=61s)
 TICTACTOE là game được phát triển bởi Phạm Tiến Du, MSV 20020039 cho bài tập lớn môn LTNC INT2215 6.
 Game dựa trên game cờ ca rô tuổi thơ. Board của game là một lưới ô vuông m * n.
 Game dùng duy nhất chuột để chơi.
@@ -54,7 +54,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - Em không thích làm game lắm và sẽ không có dự định theo nghiệp game sau này. Vì vậy game của em có khác biệt so với các bạn 1 tý. Thay vì chăm chút đồ họa, em coi trọng kiến thức học được và áp dụng vào game nhiều hơn.
 - Tầm tuần 5, 6 Vừa lúc đấy thì em có được tìm hiểu qua được thuật toán A*, minimax trong môn trí tuệ nhân tạo. Nên em quyết định làm game cờ ca rô có AI.
 - Quá trình làm game thì khá đơn giản. Ngoài cài mấy cái SDL lằng nhằng ra thì mọi thứ rất nhanh gọn nhẹ. Vì căn bản em cũng có nền tảng code từ cấp 3, game cũng không có đồ họa gì nhiều mà khó khăn cả nên em có thể tự tư duy viết game cờ ca rô ban đầu chưa có AI
-#### Giai đoạn tìm hiể và viết lại theo OOP:
+#### Giai đoạn tìm hiểu và viết lại theo OOP:
 #####
 - Em phát hiện là code mình viết khá khó phát triển. Việc thêm các thành phần game vào dần cũng như tính năng khá mệt. Em nhớ đến lập trình hướng đối tượng. Em cũng đã tìm hiểu sơ qua từ trước những chưa có cơ hội để áp dụng và hiểu sâu. Vì vậy em in giáo trình OOP ra đọc.
 - Bỏ qua chương Java để đọc những chương lý thuyết là chính, em khá là hiểu dù chưa dám chắc mình hiểu sâu. Rồi em quay lại áp dụng cho game của mình. Cách coi từng thành phần là đối tượng, rồi game chỉ là các đối tượng gọi nhau, hay là cách đóng gói, kế thừa, đa hình, lớp trừu tượng đều là điều hay ho và cần thiết lúc này đối với em.
