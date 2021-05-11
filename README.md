@@ -34,7 +34,7 @@
 
 ## 1. Tổng quan về game:
 ### 1.1 Giới thiệu:
-#### [DEMO GAME TRÊN YOUTUBE](https://www.youtube.com/watch?v=tYu1I2Vqdb8&t=61s)
+#### {@youtube: https://www.youtube.com/watch?v=tYu1I2Vqdb8&t=61s}
 TICTACTOE là game được phát triển bởi Phạm Tiến Du, MSV 20020039 cho bài tập lớn môn LTNC INT2215 6.
 Game dựa trên game cờ ca rô tuổi thơ. Board của game là một lưới ô vuông m * n.
 Game dùng duy nhất chuột để chơi.
