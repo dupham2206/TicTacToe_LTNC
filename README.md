@@ -77,11 +77,11 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - Em tập trung giảm độ phức tạp theo cách 2 cắt bớt nhánh phát triển trong thời gian rất lâu và không quan tâm lắm tới việc giảm độ sâu vì em tin tưởng cách 2 hơn. Em tập trung cả việc nâng cao kiến thức đánh cờ cả rô nữa. Vì mình cần đánh giá bằng trí tuệ của con người trong bàn cờ ca rô. Mình đánh cờ ca rô đã giỏi là khó, nhưng truyền đạt suy nghĩ của mình để máy tính đánh giá bàn cờ ca rô thì thật sự khó hơn nhiều.
 - Việc cắt nhánh là 1 con đường khá sai. Có thể 1,2 nước đầu đánh kém hơn vài nước còn lại nhưng về sau có thể tốt hơn. Nhưng vừa thấy kém đi là mình có thể loại nó để phát triển các nhánh khác. Chưa kể mỗi 1 nút, ta phải đánh giá hết các nút con, sau đó sort lại vào phát triển tầm 1/3 số nút. Độ phức tạp giảm thực sự cũng không nhiều, vẫn chạy từ 5-10s mà máy đánh cực kém. Nhưng thay vì nghi ngờ cắt nhánh, em lại nghi ngờ hàm đánh giá em viết kém. Cứ thế sửa đi sửa lại hàm đánh giá mãi mãi chả khá lên nhiều.
 - Cho đến tuần 14, em nhớ lại về việc giảm độ sâu. Em thử bỏ cắt nhánh và giảm độ sâu xuống 4. AI đánh cực kì tốt. Hiếm khi nào em đổi mood vui sướng nhanh như vậy. Vì đã tuyệt vọng vài tuần rồi. Em những có những ngày ngồi viết đi viết lại hàm đánh giá từ sáng tới tối.
-- Còn về việc sau giảm độ sâu xuống 4 lại chạy tốt. Bởi nó không phát triển thiếu nhánh nào. Chỉ là nó không phát triển đủ sâu. Dù thiếu giảm độ sâu là thiệt thòi lớn, nhưng với hàm đánh giá tốt thì đánh vẫn xuất sắc và còn nhanh nữa. Lúc này độ phức tạp chỉ đơn thuần là O(80*79*78*77*2). Đây chỉ là dựa trên tính toán. Còn thực tế cắt cụt rất nhiều, 2 cũng chỉ là con số ước lượng cho hàm đánh giá, còn bản chất thì nhiều nút đánh giá rất ít hoặc không đánh giá. Và hơn thế nữa chơi map 12x12 trải nghiệm người dùng vẫn rất tốt.
+- Còn về việc sau giảm độ sâu xuống 4 lại chạy tốt. Bởi nó không phát triển thiếu nhánh nào. Chỉ là nó không phát triển đủ sâu. Dù thiếu giảm độ sâu là thiệt thòi lớn, nhưng với hàm đánh giá tốt thì đánh vẫn xuất sắc và còn nhanh nữa. Lúc này độ phức tạp chỉ đơn thuần là O(80x79x78x77x2). Đây chỉ là dựa trên tính toán. Còn thực tế cắt cụt rất nhiều, 2 cũng chỉ là con số ước lượng cho hàm đánh giá, còn bản chất thì nhiều nút đánh giá rất ít hoặc không đánh giá. Và hơn thế nữa chơi map 12x12 trải nghiệm người dùng vẫn rất tốt.
 #### Chi tiết hàm đánh giá - thứ tự hàm nhất của game này.
 #####
 - Nhắc lại rằng, ta đánh giá là đánh giá 1 cái bàn cờ xem cái trạng thái đấy của bàn cờ đang có lợi cho ai. Càng đánh giá ra dương nhiều thì mình nhiều cửa thắng, ngược lại thì mình nhiều cửa thua.
-- Đầu tiên, ta xét từng ô 1. Với mỗi ô khác ô trống, ta sẽ khởi tạo 1 biến curvalue. Sau đó ta sẽ đếm giá trị từ các ô trên 2 đường chéo và 2 đường thẳng đi qua nó qua hàm cntContinue. Nếu cntContinue trả về giá trị khác 0, ta nhân nó vào curValue. Việc nhân này giúp đánh giá cao nước đôi, nước ba...
+- Đầu tiên, ta xét từng ô 1. Với mỗi ô khác ô trống, ta sẽ khởi tạo 1 biến curvalue. Sau đó ta sẽ đếm giá trị từ các ô trên 2 đường chéo và 2 đường thẳng đi qua nó qua hàm cntContinue. Nếu cntContinue trả về giá trị khác 0, ta nhân nó vào curValue. Việc nhân này giúp đánh giá cao nước đôi, nước ba... Cuối cùng ta sẽ cộng vào value tổng nếu nó là nước đi của AI, -value tổng nếu nó là nước đi của người chơi.
 ```sh
 int AI::heuristicValue(){
     int value = 0;
@@ -107,6 +107,72 @@ int AI::heuristicValue(){
     }
     return value;
 }
+```
+- Tiếp theo là về hàm cntContinue. Cách tính của hàm khá đơn giản. Ta có biến cntWin là để đếm giá trị. Ta sẽ loang theo hướng dx, dy cho sẵn theo 2 đầu của hướng dx, dy. 
+- Giả sử ta đánh X. Nếu ô tiếp theo gặp X thì ta +3 vào cntWin. Nếu ta gặp một ô trống chưa đánh. Ta +1 vào cntWin và đánh dấu đã gặp ô trống để Ta gặp ô trống thứ 2 sẽ dừng không duyệt nữa. Vì đến ô trống thứ 2 sẽ không gây nguy hiểm. x xxx hoặc (x xxo và có 1 nước đôi hướng khác) thì sẽ khá nguy hiểm nhưng x x xo thì chả có tẹo nguy hiểm, chặn sau được.
+- Nếu ta gặp block(tường, ô đã đánh O) thì ta sẽ dừng lại và đánh dấu gặp block. Để rồi cuối cùng, ta xét các trường hợp có 2 block, 1 block, không có block nào.
+- Đối với mỗi trường hợp, ta lại xét cntWin, rồi lại ánh xạ lên một giá trị khác rồi mới trả về. Ví dụ block = 2, cntWin >= 13, 13 tức là trường hợp 2 O vây 4 X và 1 cách(oxxx xo chẳng hạn), trường hợp nguy hiểm phải chặn ngay không thua, nên return 16. Còn cntWin = 11, block = 2 là trường hợp 3 dấu X và 2 dấu cách, chưa nguy hiểm lắm, ta trả về 2. Còn lại nước đấy không thể phát triển hoặc kém phát triển(hay đánh tù) ta trả về 0. Tương tự đối với block = 0, = 1.
+- Nghe thì có vẻ nhiều đoạn vô lý, nhưng em đã suy nghĩ kĩ và cũng đã test với nhiều số, nhiều ánh xạ. Đoạn trước dùng nhân cntContinue, hay đoạn này ánh xạ cntWin đến nay chạy vẫn tốt. Nó vẫn làm nổi bật nên những nước đi khó, khoai nhất.
+- Khi bắt tay vào viết hàm đánh giá thì mới biết viết khó như nào ạ. Chơi giỏi đã là gì so với việc truyền tốt ý tưởng cho máy tính hiểu. Hàm đánh giá này còn nhiều chỗ có thể chưa tốt, nhưng đặc tính của máy tính không phải là thông minh, mà là làm tỷ phép tính trong 1 giây mà. Ta vẫn được xét nhiều trường hợp, rồi mới tổng kết lại. Vi vậy, điều đó mới làm nên hàm đánh giá được trạng thái bàn cờ tốt.
+```sh
+    int cntContinue(int x, int y, int dx, int dy, int statePlayer){
+        int cntWin = 0, block = 0;
+        bool HaveEmpty = 0;
+        for(int i = 1; i <= 4; ++i){
+            if(!checkInsideBoard(x + i * dx, y + i * dy)){
+                block++;
+                break;
+            }
+            if(boardState[x + i * dx][y + i * dy] == statePlayer) cntWin += 3;
+            if(boardState[x + i * dx][y + i * dy] == STATE_EMPTY){
+                if(HaveEmpty == 0){
+                    cntWin++;  HaveEmpty = 1;
+                }
+                else break;
+            }
+            if(boardState[x + i * dx][y + i * dy] == 3 - statePlayer){
+                block++;
+                break;
+            }
+        }
+        HaveEmpty = 0;
+        for(int i = -1; i >= -4; --i){
+            if(!checkInsideBoard(x + i * dx, y + i * dy)){
+                block++;
+                break;
+            }
+            if(boardState[x + i * dx][y + i * dy] == statePlayer) cntWin += 3;
+            if(boardState[x + i * dx][y + i * dy] == STATE_EMPTY){
+                if(HaveEmpty == 0){
+                    cntWin++;   HaveEmpty = 1;
+                }
+                else break;
+            }
+            if(boardState[x + i * dx][y + i * dy] == 3 - statePlayer){
+                block++;
+                break;
+            }
+        }
+        cntWin += 3;
+        if(block == 2){
+            if(cntWin >= 13) cntWin = 16;
+            else if(cntWin >= 11) cntWin = 2;
+            else return 0;
+        }
+        if(block == 1){
+            if(cntWin >= 11) cntWin = 16;
+            else if(cntWin >= 10) cntWin = 2;
+            else return 0;
+        }
+        if(block == 0){
+            if(cntWin >= 13) cntWin = 2048;
+            else if(cntWin >= 11) cntWin = 32;
+            else if(cntWin >= 8) cntWin = 2;
+            else return 0;
+        }
+        if(statePlayer == 1) return cntWin * 2;
+        else return cntWin;
+    }
 ```
 ## 2. Cài đặt chương trình:
 ### sdlsupport.h: <a name="sdlsupport.h"></a>
