@@ -3,18 +3,18 @@
 
 ##### 1. Tổng quan về game:
 ######    [1.1 Giới thiệu:](#introduction)
-######    1.2 Kiến thưc áp dụng:
-######    1.3 Chia sẻ về quá trình làm game:
+######    [1.2 Kiến thưc áp dụng:](#knowledge)
+######    [1.3 Chia sẻ về quá trình làm game:](#share)
 ##### 2. Cài đặt chương trình:
-######     - sdlsupport.h
-######     - button.h
-######     - pregame.h
-######     - game.h
-######     - AI.h
-######     - AIextendEasy.h
-######     - AIextendMedium.h
-######     - AIextendHard.h
-######     - main.cpp
+######     - [sdlsupport.h](#sdlsupport.h)
+######     - [button.h](#button.h)
+######     - [pregame.h](#pregame.h)
+######     - [game.h](#game.h)
+######     - [AI.h](#AI.h)
+######     - [AIextendEasy.h](#AIextendEasy.h)
+######     - [AIextendMedium.h](#AIextendMedium.h)
+######     - [AIextendHard.h](#AIextendHard.h)
+######     - [main.cpp](#main.cpp)
 
 ##
 ------------------------------------------------
@@ -41,14 +41,14 @@ Game dùng duy nhất chuột để chơi.
 2 người chơi sẽ lần lượt đánh "X" và đánh "O" cho đến khi đủ k "X" liên tiếp hoặc k "O" liên tiếp theo hàng dọc, ngang hoặc chéo thì người chơi đó thắng hoặc thua. Nếu không ai có thể đạt được như vậy thì trò chơi sẽ hòa.
 Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 thì k = 4, 9x9 và 12x12 thì k = 12. Ngoài chế độ chơi 2 người với nhau, TICTACTOE còn được thiết kế để người chơi chơi với AI ở bàn 3x3 và 9x9, 12x12 với các mức độ chơi easy, medium, hard.
 
-### 1.2 Kiến thức áp dụng:
+### 1.2 Kiến thức áp dụng: <a name="knowledge"></a>
 ####
 - Ngôn ngữ lập trình C++.
 - Thư viện đồ họa SDL2 qua slide cô Châu và lazyfoo.
 - Kiến thức về OOP: lớp, đối tượng, tính đóng gói, tính thừa kế, lớp trừu tượng. (tham khảo qua giáo trình OOP_2013 của ĐHCN-ĐHQGHN)
 - Kiến thức về Trí tuệ nhân tạo: các chiến lược tìm kiếm có đối thủ: thuật toán minimax, prunning alpha-beta.(tham khảo qua google, giáo trình trí tuệ nhân tạo)
 - Kiến thức về game cờ caro: Để viết hàm đánh giá tốt cho AI trong game.
-### 1.3 Chia sẻ về quá trình làm game:
+### 1.3 Chia sẻ về quá trình làm game: <a name="share"></a>
 #### Mở đầu làm game và chọn đề tài:
 #####
 - Em không thích làm game lắm và sẽ không có dự định theo nghiệp game sau này. Vì vậy game của em có khác biệt so với các bạn 1 tý. Thay vì chăm chút đồ họa, em coi trọng kiến thức học được và áp dụng vào game nhiều hơn.
@@ -70,8 +70,8 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - Để rồi tuyệt vọng rồi, không biết làm cách nào nữa. Em định nộp con AI lởm luôn. Nhưng tự nhiên đầu lại nảy việc thử lại depth = 4 xem sao. Không ngờ nó lại nhanh hơn rất nhiều, đánh lại cực kì khôn. Vì hàm đánh giá đủ tốt, phát triển 4 nước thôi thì vẫn là tốt. Khoảnh khắc sửa được rất là sung sướng.
 - Thế rồi em chia level bằng cách kế thừa. Lấy AI thông minh đấy là hard, em chặn khả năng tấn công của AI và cho đấy là level medium. Em chặn tiếp khả năng chặn của AI thành kém thì thành mode easy. Em chỉ lại đồ họa và chỉnh sửa lại code nữa và nó thành như bây giờ. Phải nó làm em khá tự hào về game này, Tự hào về con AI em viết ra chạy được map 12x12 mượt mà lại đánh tốt.
 - Có 1 ý thêm là hàm đánh giá em tự viết hoàn toàn do trên mạng chỉ có minimax 3x3. Ý tưởng chính là mình sẽ xét từng ô 1. Với mỗi ô xem dọc ngang chéo phát triển được không. Nếu chỉ 1 hướng phát triển được thì có a điểm. Nhưng nếu có 1 hướng nước phát triển tốt và tạo ra b điểm. Ta sẽ trả về a * b để giá trị rất cao nhằm ưu tiên "nước đôi". Nếu có cơ hội em sẽ trình bày hàm đánh giá kĩ hơn sau.
-## 2. Cài đặt chương trình:
-### sdlsupport.h:
+## 2. Cài đặt chương trình: 
+### sdlsupport.h: <a name="sdlsupport.h"></a>
 #### Chứa những biến toàn cục liên quan đến window và data, những hàm mà SDL2 support, hàm load hình ảnh và âm thanh ,nhiều enum đánh dấu đặc điểm dữ liệu.
 - loadMedia(): load 1 ảnh [tham khảo lazyfoo rồi chỉnh sửa lại].
 - RenderMedia(): render 1 ảnh [tham khảo lazyfoo rồi chỉnh sửa lại].
@@ -84,7 +84,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - các loại enum: phân biệt tất cả các trạng thái game, trạng thái pregame, loại button, trạng thái button, trạng thái bảng thông báo...
 - setData(): load trước tất cả các ảnh, nhạc. Nếu vừa chơi vừa load rất tốn dữ liệu.
 
-### button.h:
+### button.h:  <a name="button.h"></a>
 #### Chứa class Button. Bất kì đối tượng nút nào để ấn và tạo sự kiện trong game đều tạo từ class Button.
 ####
 **private:**
@@ -109,7 +109,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - bool handleEventButton(): check sự kiện button click, nếu button đấy bị ấn sẽ thay đổi state
 - render(): render ảnh của button. Có thể render có khung hoặc không(nút X,O có khung bên ngoài), có thể renderPresent lại luôn hay không(nhằm tạo thẩm mỹ).
 
-### pregame.h:
+### pregame.h: <a name="pregame.h"></a>
 #### Chứa menu:
 #####
 + tiêu đề game(trên cùng)
@@ -160,7 +160,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void handleEvent(): check sự kiện cho preGame. Gọi tất cả các hàm check sự kiện trong private ở trên.
 - void render(): in ra cái preGame.
 
-### game.h:
+### game.h:   <a name="game.h"></a>
 #### Chứa game gồm:
 #####
 + m*m ô button(trống lúc đầu) là board để đánh. m phụ thuộc vào preGame người chơi chọn map gì.
@@ -208,7 +208,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void handleEvent(): check event cho mọi button có trong giao diện đối tượng game.
 - void render: render giao diện đối tượng game. bao gồm gọi render tất cả ảnh và button.
 
-### AI.h
+### AI.h  <a name="AI.h"></a>
 #### là class chứa thuật toán minimax cùng hàm đánh giá và các biến liên quan đến bàn chơi.
 *cài đặt:*
 ####
@@ -233,13 +233,13 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 - void setSizeOfBoard(int x,int y):
 - void setNumStepToWin(int value):
 - pair<int,int> bestMove(): trả về ô mà AI sẽ đi sau khi duyệt minimax.
-### AIextendEasy.h:
+### AIextendEasy.h:   <a name="AIextendEasy.h"></a>
 #### là class kế thừa từ class AI, có thuật toán chỉ biết chặn, như chọn nước để chặn thì cũng rất kém.(làm suy yếu từ AIextendMedium)
-### AIextendMedium.h:
+### AIextendMedium.h: <a name="AIextendMedium.h"></a>
 #### là class kế thừa từ class AI, có thuật toán chỉ biết chặn, như chọn nước để chặn khá khôn, biết nước sẽ thắng.(làm suy yếu từ AIextendHard)
-### AIextendHard.h:
+### AIextendHard.h:   <a name="AIextendHard.h"></a>
 #### là class kế thừa từ class AI, không chỉ biết chặn mà còn biết tấn công tạo nước đôi cực tốt, là niềm tự hào của game nào cũng như người tạo ra game này.
-### main.cpp:
+### main.cpp: <a name="main.cpp"></a>
 - chứa biến inGame(= 1 là đang ở trong game, = 0 là đang ở preGame).
 - chứa các biến khởi tạo cho SDL.
 - gọi hàm setData từ SDLsupport.
