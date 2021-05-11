@@ -2,19 +2,19 @@
 ## Mục lục:
 
 ##### 1. Tổng quan về game:
-######    [1.1 Giới thiệu:](#introduction)
-######    [1.2 Kiến thưc áp dụng:](#knowledge)
-######    [1.3 Chia sẻ về quá trình làm game:](#share)
+  ######    [1.1 Giới thiệu:](#introduction)
+  ######    [1.2 Kiến thưc áp dụng:](#knowledge)
+  ######    [1.3 Chia sẻ về quá trình làm game:](#share)
 ##### 2. Cài đặt chương trình:
-######     - [sdlsupport.h](#sdlsupport.h)
-######     - [button.h](#button.h)
-######     - [pregame.h](#pregame.h)
-######     - [game.h](#game.h)
-######     - [AI.h](#AI.h)
-######     - [AIextendEasy.h](#AIextendEasy.h)
-######     - [AIextendMedium.h](#AIextendMedium.h)
-######     - [AIextendHard.h](#AIextendHard.h)
-######     - [main.cpp](#main.cpp)
+  ######     - [sdlsupport.h](#sdlsupport.h)
+  ######     - [button.h](#button.h)
+  ######     - [pregame.h](#pregame.h)
+  ######     - [game.h](#game.h)
+  ######     - [AI.h](#AI.h)
+  ######     - [AIextendEasy.h](#AIextendEasy.h)
+  ######     - [AIextendMedium.h](#AIextendMedium.h)
+  ######     - [AIextendHard.h](#AIextendHard.h)
+  ######     - [main.cpp](#main.cpp)
 
 ##
 ------------------------------------------------
@@ -58,7 +58,7 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 #####
 - Em phát hiện là code mình viết khá khó phát triển. Việc thêm các thành phần game vào dần cũng như tính năng khá mệt. Em nhớ đến lập trình hướng đối tượng. Em cũng đã tìm hiểu sơ qua từ trước những chưa có cơ hội để áp dụng và hiểu sâu. Vì vậy em in giáo trình OOP ra đọc.
 - Bỏ qua chương Java để đọc những chương lý thuyết là chính, em khá là hiểu dù chưa dám chắc mình hiểu sâu. Rồi em quay lại áp dụng cho game của mình. Cách coi từng thành phần là đối tượng, rồi game chỉ là các đối tượng gọi nhau, hay là cách đóng gói, kế thừa, đa hình, lớp trừu tượng đều là điều hay ho và cần thiết lúc này đối với em.
-- Đọc xong lý thuyết rồi em quay lại áp dụng oop vẫn khá là
+- Đọc xong lý thuyết rồi em quay lại áp dụng oop khá cồng kềnh, thiết kế chương trình chưa hoàn hảo. Nhưng dần dần tự bơi thì cũng bơi được. Em cảm thấy thiết kế chương trình bây giờ của em khá gọn, dễ hiểu. Mọi thứ đều được chia ra làm các đối tượng, quan hệ HAS A, IS A rõ ràng. Chỉ 1 file sdlsupport là em khá phân vân. Trong file đấy sẽ chứa load data ảnh, nhạc, hàm init, quit SDL... Em nghĩ sẽ tối hơn nếu coi nó là biến toàn cục thay vì cho và class và đi theo class.
 - Thiết kế xong chương trình rất oke rồi thì lại đến phần khó nhất là làm AI cho game từ minimax. Em biết là nó khá khó đối với em nhưng không nghĩ lại khó đến thế. Trước tiên ta làm minimax cho map 3x3 trước vì nó khá dễ.
 - Thuật toán minimax nó cũng không khác kiểu 1 cách quy hoạch động đơn giản trên đồ thị là mấy. Cho nên việc tự cài khá dễ, ai học minimax rồi chắc cũng làm được hết. 3x3 khá nhiều người làm trên mạng rồi nên cho nên dù đã tự viết được nhưng em vẫn lấy sườn trên mạng về vì người ta viết khá tốt, dễ dùng, dễ phát triển. Nhất là phần cắt cụt alpha-beta.
 - Đến phần AI trên map lớn hơn. Lúc này không thể xây cả cây tìm kiếm như map 3x3 vì độ phức tạp của cây tìm kiếm là O((m*n)!) với m, n là kích thước bảng. Với 3x3 là 9! còn có thể chấp nhận được. chỉ 4x4 thôi cũng là 16! rồi. Dù cắt cụt alpha-beta cũng chỉ giảm đi khoảng 2-3 lần.
