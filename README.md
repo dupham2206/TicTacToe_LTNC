@@ -2,19 +2,19 @@
 ## Mục lục:
 
 ##### 1. Tổng quan về game:
-  ######    [1.1 Giới thiệu:](#introduction)
-  ######    [1.2 Kiến thưc áp dụng:](#knowledge)
-  ######    [1.3 Chia sẻ về quá trình làm game:](#share)
+######    [1.1 Giới thiệu:](#introduction)
+######    [1.2 Kiến thưc áp dụng:](#knowledge)
+######    [1.3 Chia sẻ về quá trình làm game:](#share)
 ##### 2. Cài đặt chương trình:
-  ######     - [sdlsupport.h](#sdlsupport.h)
-  ######     - [button.h](#button.h)
-  ######     - [pregame.h](#pregame.h)
-  ######     - [game.h](#game.h)
-  ######     - [AI.h](#AI.h)
-  ######     - [AIextendEasy.h](#AIextendEasy.h)
-  ######     - [AIextendMedium.h](#AIextendMedium.h)
-  ######     - [AIextendHard.h](#AIextendHard.h)
-  ######     - [main.cpp](#main.cpp)
+###### --- [sdlsupport.h](#sdlsupport.h)
+###### --- [button.h](#button.h)
+###### --- [pregame.h](#pregame.h)
+###### --- [game.h](#game.h)
+###### --- [AI.h](#AI.h)
+###### --- [AIextendEasy.h](#AIextendEasy.h)
+###### --- [AIextendMedium.h](#AIextendMedium.h)
+###### --- [AIextendHard.h](#AIextendHard.h)
+###### --- [main.cpp](#main.cpp)
 
 ##
 ------------------------------------------------
@@ -58,19 +58,57 @@ Trong game TICTACTOE này sẽ có 4 loại màn chơi: 3x3 với k = 3, 5x5 th�
 #####
 - Em phát hiện là code mình viết khá khó phát triển. Việc thêm các thành phần game vào dần cũng như tính năng khá mệt. Em nhớ đến lập trình hướng đối tượng. Em cũng đã tìm hiểu sơ qua từ trước những chưa có cơ hội để áp dụng và hiểu sâu. Vì vậy em in giáo trình OOP ra đọc.
 - Bỏ qua chương Java để đọc những chương lý thuyết là chính, em khá là hiểu dù chưa dám chắc mình hiểu sâu. Rồi em quay lại áp dụng cho game của mình. Cách coi từng thành phần là đối tượng, rồi game chỉ là các đối tượng gọi nhau, hay là cách đóng gói, kế thừa, đa hình, lớp trừu tượng đều là điều hay ho và cần thiết lúc này đối với em.
-- Đọc xong lý thuyết rồi em quay lại áp dụng oop khá cồng kềnh, thiết kế chương trình chưa hoàn hảo. Nhưng dần dần tự bơi thì cũng bơi được. Em cảm thấy thiết kế chương trình bây giờ của em khá gọn, dễ hiểu. Mọi thứ đều được chia ra làm các đối tượng, quan hệ HAS A, IS A rõ ràng. Chỉ 1 file sdlsupport là em khá phân vân. Trong file đấy sẽ chứa load data ảnh, nhạc, hàm init, quit SDL... Em nghĩ sẽ tối hơn nếu coi nó là biến toàn cục thay vì cho và class và đi theo class.
-- Thiết kế xong chương trình rất oke rồi thì lại đến phần khó nhất là làm AI cho game từ minimax. Em biết là nó khá khó đối với em nhưng không nghĩ lại khó đến thế. Trước tiên ta làm minimax cho map 3x3 trước vì nó khá dễ.
-- Thuật toán minimax nó cũng không khác kiểu 1 cách quy hoạch động đơn giản trên đồ thị là mấy. Cho nên việc tự cài khá dễ, ai học minimax rồi chắc cũng làm được hết. 3x3 khá nhiều người làm trên mạng rồi nên cho nên dù đã tự viết được nhưng em vẫn lấy sườn trên mạng về vì người ta viết khá tốt, dễ dùng, dễ phát triển. Nhất là phần cắt cụt alpha-beta.
-- Đến phần AI trên map lớn hơn. Lúc này không thể xây cả cây tìm kiếm như map 3x3 vì độ phức tạp của cây tìm kiếm là O((m*n)!) với m, n là kích thước bảng. Với 3x3 là 9! còn có thể chấp nhận được. chỉ 4x4 thôi cũng là 16! rồi. Dù cắt cụt alpha-beta cũng chỉ giảm đi khoảng 2-3 lần.
-- Ta chỉ xây được đến depth nào đó rồi ta phải đánh giá cái board đấy có lợi cho ai. Giá trị càng dương thì càng có lợi cho AI. Rồi em viết 1 hàm đánh giá khá ngây thơ. Nhưng vì chọn depth = 5 nên nó vẫn chạy đủ khôn để đánh khôn nên rất vui.
-- Nhưng user experience thì khá tệ. Map 9x9 thì độ phức tạp là 81x80x79x78x77xđộ phức tạp hàm đánh giá(cứ cho 5 phép tính đi) > 10^10. Theo kiến thức CP cũ em được biết, 1 giây chạy khoảng 10^8 phép tính đơn giản. Vậy là AI sẽ mất 100s cho 1 nước đi. Cắt cụt alpha-beta giảm rất tốt nhưng cũng chạy tận 15s. Đã chờ lâu, mà còn spam cái, game sẽ lại not responding. Không còn gì cáu hơn nữa.
-- Em giảm độ sâu xuống 4 thì chạy cũng tạm tàm. Nhưng mà đánh kém lắm. Do hàm đánh giá em vẫn ngây thơ. Em không phải người chơi cờ caro giỏi. Truyền hoàn toàn tri thức của mình cho máy tính cũng không phải là dễ nữa. Thế em quyết định sẽ giữ nguyên độ sâu 5 và cố gắng cắt bớt nhánh phát triển đi. Đồng thời cũng đi học cách đánh cờ caro giỏi.
-- Em duyệt đến đâu, em đánh giá đến đấy luôn. Rồi sort lại và chỉ phát triển 1 nửa số đỉnh ở phần trên của sort. Thời gian chạy vẫn tầm 5s mà đánh cũng chả thông minh hơn. Giảm số đỉnh phát triển xuống 1/3 thì còn kém hơn nữa. Dù em đã viết dần lại hàm đánh giá cho thông minh hơn, nhưng việc cắt đi nhánh dù sort rổi cũng làm mất đi khá nhiều con đường sáng lạng.
-- Có những nước đi căn bản là lúc đầu thấy tốt nhưng về sau bế tắc, lúc đầu tính điểm kém nhưng về sau lại tốt. Vì vậy cắt đi thế là không hiệu quả. Nhưng sau này em mới nhận ra. Còn trong tầm 2-3 tuần, em chỉ nghĩ do em đánh giá kém và viết đi viết lại hàm đánh giá.
-- Để rồi tuyệt vọng rồi, không biết làm cách nào nữa. Em định nộp con AI lởm luôn. Nhưng tự nhiên đầu lại nảy việc thử lại depth = 4 xem sao. Không ngờ nó lại nhanh hơn rất nhiều, đánh lại cực kì khôn. Vì hàm đánh giá đủ tốt, phát triển 4 nước thôi thì vẫn là tốt. Khoảnh khắc sửa được rất là sung sướng.
-- Thế rồi em chia level bằng cách kế thừa. Lấy AI thông minh đấy là hard, em chặn khả năng tấn công của AI và cho đấy là level medium. Em chặn tiếp khả năng chặn của AI thành kém thì thành mode easy. Em chỉ lại đồ họa và chỉnh sửa lại code nữa và nó thành như bây giờ. Phải nó làm em khá tự hào về game này, Tự hào về con AI em viết ra chạy được map 12x12 mượt mà lại đánh tốt.
-- Có 1 ý thêm là hàm đánh giá em tự viết hoàn toàn do trên mạng chỉ có minimax 3x3. Ý tưởng chính là mình sẽ xét từng ô 1. Với mỗi ô xem dọc ngang chéo phát triển được không. Nếu chỉ 1 hướng phát triển được thì có a điểm. Nhưng nếu có 1 hướng nước phát triển tốt và tạo ra b điểm. Ta sẽ trả về a * b để giá trị rất cao nhằm ưu tiên "nước đôi". Nếu có cơ hội em sẽ trình bày hàm đánh giá kĩ hơn sau.
-## 2. Cài đặt chương trình: 
+- Đọc xong lý thuyết rồi em quay lại áp dụng oop khá cồng kềnh, thiết kế chương trình chưa hoàn hảo. Nhưng dần dần tự bơi thì cũng bơi được. Em cảm thấy thiết kế chương trình bây giờ của em khá gọn, dễ hiểu. Mọi thứ đều được chia ra làm các đối tượng, quan hệ HAS A, IS A rõ ràng. Chỉ 1 file sdlsupport là em khá phân vân. Trong file đấy sẽ chứa load data ảnh, nhạc, hàm init, quit SDL... Em nghĩ sẽ tốt hơn nếu coi nó là biến toàn cục thay vì cho vào class và đi theo class.
+#### Phát triển minimax 3x3
+#####
+- Thiết kế xong chương trình thì lại đến phần khó nhất là làm AI cho game từ minimax. Trước tiên ta làm minimax cho map 3x3 trước vì nó khá dễ.
+- Nói qua về thuật toán minimax(em nghĩ em diễn đạt khó hiểu, cô có thể tra google dễ hiểu hơn) thì nó là 1 thuật toán trí tuệ nhân tạo trong các phương pháp tìm kiểu giải pháp có đối thủ. Minimax có thể áp dụng trực tiếp cho nhiều trò chơi đối kháng như cờ ca rô, cờ vua, cờ tướng. Minimax là 1 thuật toán thiên về backtracking, nó sẽ "đánh thử" và đánh giá nước đi. Coi mỗi trạng thái của bàn cờ là 1 đỉnh, minimax sẽ dfs từ đỉnh đầu tiên là bàn cờ ca rô trống không tới trạng thái kết thúc.
+- Trạng thái kết thúc là khi thắng thua hoặc hòa. Mỗi lần ta sẽ tính value của mỗi đỉnh thông qua max và min của các đỉnh con, tức là các trạng thái đánh cờ tiếp theo. Lấy max khi nước tiếp theo là nước đánh của ta, lấy min khi nước tiếp theo là nước của mình. Vì value sẽ phản ánh khả năng thắng thua của bàn chơi. Value càng lớn thì ta có khả năng thắng càng cao và ngược lại. Value = 0 tức là 2 người khả năng hòa. Vì vậy khi đến nước ta đánh, ta phải lấy max, tức là đánh sao cho vào trạng thái tốt nhất, và cũng tương tự thế ta sẽ lấy min khi nước cờ của đối thủ.
+- Về cắt cụt alpha-beta(em nghĩ cô cũng nên google alpha beta prunning), nó cũng như kiểu cắt nhánh cận trong backtrack. Giả sử nút A cần lấy max, ta tính được xong con B1 của A và đang tính con B2 của A. Ta tính được cháu C1 của B2 có value(C1) < value(B1) thì ta sẽ không phát triển B2 nữa. Vì B2 lấy min nên value(B2) < value(C1) < value(B1). Mà A lấy max nên kiểu gì cũng ít nhất lấy B1 chứ không lấy B2.
+- Bình thường, value phải tự đánh giá qua kinh nghiệm của con người(thế mới đúng trí tuệ nhân tạo) nhưng vì 3x3 thì độ phức tạp để duyệt cây trò chơi là O(9!)(nước đầu có 9 cách chọn, nước sau có 8 cách chọn...) nhưng do ta cho người chơi đi trước(nên chỉ còn 8!), cắt cụt alpha beta và cả có những nước đi đến nước thứ 5 là hết ván nên chỉ max có 8000 lần duyệt hàm dfs. Giảm 5 lần so với cây trò chơi dự kiến.
+- Phần alpha beta em có tham khảo cách viết trên mạng, vì em viết theo ý hiểu của em về alpha beta thì độ phức tạp tăng gấp đôi.
+#### Phát triển minimax 9x9
+#####
+- Đến phần AI trên map lớn hơn. Lúc này không thể xây cả cây tìm kiếm như map 3x3 vì độ phức tạp của cây tìm kiếm là O((m*n)!) với m, n là kích thước bảng. Với 3x3 là 9! còn có thể chấp nhận được. chỉ 4x4 thôi cũng là 16! rồi. Dù cắt cụt alpha-beta cũng chỉ giảm đi khoảng 2-4 lần tùy trường hợp.
+- Ta chỉ xây được đến depth nào đó rồi ta phải đánh giá cái trạng thái bàn cờ đấy có lợi cho ai như thế nào thông qua value. Giá trị càng dương thì càng có lợi cho AI.
+- Lúc đầu em viết 1 hàm đánh giá khá ngây thơ do cũng chưa chơi cờ ca rô giỏi. Hàm đánh giá lúc đầu chỉ đơn thuần đếm cả đường ngang, chéo dọc ở mỗi ô rồi nhân vào nhau(vì ưu tiên nước đôi). Nhưng vì chọn depth = 5 nên nó vẫn chạy đủ khôn để đánh khôn nên rất vui.
+- Nhưng user experience thì khá tệ. Map 9x9 thì độ phức tạp là 81x80x79x78x77xđộ phức tạp hàm đánh giá(cứ cho trung bình 5 phép tính đi) > 10^10. Theo kiến thức CP cũ em được biết, 1 giây chạy khoảng 10^8 phép tính đơn giản. Vậy là AI sẽ mất 100s cho 1 nước đi. Cắt cụt alpha-beta giảm rất tốt nhưng cũng chạy tận 15 - 30s. Đã chờ lâu rồi, mà còn spam cái, game sẽ lại not responding. Không còn gì cáu hơn nữa.
+- Lúc này em nghĩ ra 2 cách giảm độ phức tạp. Thứ nhất là giảm độ sâu của cây tìm kiếm. Nhưng vì hàm đánh giá của em khá kém nên giảm xuống độ sâu depth = 4 thì đánh như đánh bừa. Thứ 2 là cắt bớt nhánh phát triển mỗi bước. Ví dụ thay vì phát triể 80 nước, mình đánh giá 40 nước tốt nhất rồi phát triển 40 nước đấy.
+- Em tập trung giảm độ phức tạp theo cách 2 cắt bớt nhánh phát triển trong thời gian rất lâu và không quan tâm lắm tới việc giảm độ sâu vì em tin tưởng cách 2 hơn. Em tập trung cả việc nâng cao kiến thức đánh cờ cả rô nữa. Vì mình cần đánh giá bằng trí tuệ của con người trong bàn cờ ca rô. Mình đánh cờ ca rô đã giỏi là khó, nhưng truyền đạt suy nghĩ của mình để máy tính đánh giá bàn cờ ca rô thì thật sự khó hơn nhiều.
+- Việc cắt nhánh là 1 con đường khá sai. Có thể 1,2 nước đầu đánh kém hơn vài nước còn lại nhưng về sau có thể tốt hơn. Nhưng vừa thấy kém đi là mình có thể loại nó để phát triển các nhánh khác. Chưa kể mỗi 1 nút, ta phải đánh giá hết các nút con, sau đó sort lại vào phát triển tầm 1/3 số nút. Độ phức tạp giảm thực sự cũng không nhiều, vẫn chạy từ 5-10s mà máy đánh cực kém. Nhưng thay vì nghi ngờ cắt nhánh, em lại nghi ngờ hàm đánh giá em viết kém. Cứ thế sửa đi sửa lại hàm đánh giá mãi mãi chả khá lên nhiều.
+- Cho đến tuần 14, em nhớ lại về việc giảm độ sâu. Em thử bỏ cắt nhánh và giảm độ sâu xuống 4. AI đánh cực kì tốt. Hiếm khi nào em đổi mood vui sướng nhanh như vậy. Vì đã tuyệt vọng vài tuần rồi. Em những có những ngày ngồi viết đi viết lại hàm đánh giá từ sáng tới tối.
+- Còn về việc sau giảm độ sâu xuống 4 lại chạy tốt. Bởi nó không phát triển thiếu nhánh nào. Chỉ là nó không phát triển đủ sâu. Dù thiếu giảm độ sâu là thiệt thòi lớn, nhưng với hàm đánh giá tốt thì đánh vẫn xuất sắc và còn nhanh nữa. Lúc này độ phức tạp chỉ đơn thuần là O(80*79*78*77*2). Đây chỉ là dựa trên tính toán. Còn thực tế cắt cụt rất nhiều, 2 cũng chỉ là con số ước lượng cho hàm đánh giá, còn bản chất thì nhiều nút đánh giá rất ít hoặc không đánh giá. Và hơn thế nữa chơi map 12x12 trải nghiệm người dùng vẫn rất tốt.
+#### Chi tiết hàm đánh giá - thứ tự hàm nhất của game này.
+#####
+- Nhắc lại rằng, ta đánh giá là đánh giá 1 cái bàn cờ xem cái trạng thái đấy của bàn cờ đang có lợi cho ai. Càng đánh giá ra dương nhiều thì mình nhiều cửa thắng, ngược lại thì mình nhiều cửa thua.
+- Đầu tiên, ta xét từng ô 1. Với mỗi ô khác ô trống, ta sẽ khởi tạo 1 biến curvalue. Sau đó ta sẽ đếm giá trị từ các ô trên 2 đường chéo và 2 đường thẳng đi qua nó qua hàm cntContinue. Nếu cntContinue trả về giá trị khác 0, ta nhân nó vào curValue. Việc nhân này giúp đánh giá cao nước đôi, nước ba...
+```sh
+int AI::heuristicValue(){
+    int value = 0;
+    for(int x = 1; x <= sizeOfBoard.second; ++x){
+        for(int y = 1; y <= sizeOfBoard.first; ++y){
+            if(boardState[x][y] == 1){ // STATE_PLAYER = 1
+                int curValue = 1;
+                for(int i = 0; i < 4; ++i){
+                    int lengthCanBeWin = cntContinue(x, y, dx[i], dy[i], 1);
+                    if(lengthCanBeWin) curValue *= lengthCanBeWin;
+                }
+                if(curValue != 1) value -= curValue;
+            }
+            if(boardState[x][y] == 2){ // STATE_AI = 2
+                int curValue = 1;
+                for(int i = 0; i < 4; ++i){
+                    int lengthCanBeWin = cntContinue(x, y, dx[i], dy[i], 2);
+                    if(lengthCanBeWin) curValue *= lengthCanBeWin;
+                }
+                if(curValue != 1) value += curValue;
+            }
+        }
+    }
+    return value;
+}
+```
+## 2. Cài đặt chương trình:
 ### sdlsupport.h: <a name="sdlsupport.h"></a>
 #### Chứa những biến toàn cục liên quan đến window và data, những hàm mà SDL2 support, hàm load hình ảnh và âm thanh ,nhiều enum đánh dấu đặc điểm dữ liệu.
 - loadMedia(): load 1 ảnh [tham khảo lazyfoo rồi chỉnh sửa lại].
